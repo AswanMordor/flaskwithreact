@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/react/css/main.fe79dbca.chunk.css",
+    "main.js": "/static/react/js/main.d72f4290.chunk.js",
+    "main.js.map": "/static/react/js/main.d72f4290.chunk.js.map",
+    "runtime-main.js": "/static/react/js/runtime-main.24f57757.js",
+    "runtime-main.js.map": "/static/react/js/runtime-main.24f57757.js.map",
+    "css/2.0624914a.chunk.css": "/static/react/css/2.0624914a.chunk.css",
+    "js/2.15a42ea3.chunk.js": "/static/react/js/2.15a42ea3.chunk.js",
+    "js/2.15a42ea3.chunk.js.map": "/static/react/js/2.15a42ea3.chunk.js.map",
+    "../../templates/index.html": "/static/react/../../templates/index.html",
+    "css/2.0624914a.chunk.css.map": "/static/react/css/2.0624914a.chunk.css.map",
+    "css/main.fe79dbca.chunk.css.map": "/static/react/css/main.fe79dbca.chunk.css.map",
+    "media/andy-bio.png": "/static/react/media/andy-bio.4265f871.png",
+    "media/anna-bio.png": "/static/react/media/anna-bio.6294695d.png",
+    "media/eric-bio.png": "/static/react/media/eric-bio.0a232d1b.png",
+    "media/header.png": "/static/react/media/header.2b4fc674.png",
+    "media/neel-bio.png": "/static/react/media/neel-bio.44527d68.png",
+    "media/sam-bio.png": "/static/react/media/sam-bio.532af86e.png",
+    "media/usman-bio.png": "/static/react/media/usman-bio.5a4de8a6.png",
+    "precache-manifest.77b33e8062ecd490fd21a3b14853e9af.js": "/static/react/precache-manifest.77b33e8062ecd490fd21a3b14853e9af.js",
+    "service-worker.js": "/static/react/service-worker.js"
+  },
+  "entrypoints": [
+    "js/runtime-main.24f57757.js",
+    "css/2.0624914a.chunk.css",
+    "js/2.15a42ea3.chunk.js",
+    "css/main.fe79dbca.chunk.css",
+    "js/main.d72f4290.chunk.js"
+  ]
+}
