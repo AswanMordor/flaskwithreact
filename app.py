@@ -1,12 +1,12 @@
-from flask import Flask
+import flask
 
-app = Flask(__name__)
+app = flask.Flask(__name__,template_folder='static/templates')
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def index():
+    return flask.render_template("index.html", token="Sucessful Flask Test")
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
