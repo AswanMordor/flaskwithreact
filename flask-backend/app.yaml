@@ -1,0 +1,20 @@
+runtime: python27
+api_version: 1
+threadsafe: false
+
+libraries:
+- name: ssl
+  version: latest
+- name: flask
+  version: 0.12
+
+handlers:
+- url: /static
+  static_dir: static
+- url: /.*
+  script: main.app
+
+skip_files:
+  - venv/
+  - .git/
+  - ../react-frontend/
