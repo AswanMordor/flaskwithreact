@@ -1,20 +1,54 @@
 import React from "react";
-import { Card, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { Card, InputGroup, FormControl } from 'react-bootstrap';
+import Slider from '@material-ui/core/Slider';
+import Button from '@material-ui/core/Button';
 import "./css/sidenav.css";
-import {Item, ItemCard } from './item';
+import Typography from "@material-ui/core/Typography";
+import "./RangeSlider";
+import RangeSlider from "./RangeSlider";
+import SizeSlider from "./SizeSlider";
 
 class SideNav extends React.Component {
+  // constructor (props) {
+  //   super(props)
+  //   this.reverseList = this.reveresList.bind(this)
+  //   this.state = {
+  //     itemList: [],
+  //   }
+  // }
 
+  // sortList (event){
+  //   const {itemList} = this.state;
+  //   let newItemList = itemList.sort();
+  //   this.setState({
+  //     itemList: newItemList
+  //   })
+  // }
+
+  // reverseList (event) {
+  //   const {itemList} = this.state
+  //   let newItemList = itemList.reverse()
+  //   this.setState({
+  //     itemList: newItemList
+  //   })
+  // }
+  // submitHandler = (e) => {
+  //   // console.log(document.getElementById("search"));
+  //   alert("submitted");
+  //   e.preventDefault();
+  //   const searched = this.refs.search.value;
+  //   console.log(searched);
+  // }
+
+  // componentDidMount () {
+  //   // const itemtList = ITEM_ARRY
+  //   this.setState({
+  //     itemList: itemList
+  //   })
+  // }
   state = {
     items: []
   }
-
-  // sortItemsBy(prop){
-  //   switch(prop){
-  //     case 'a_z':
-  //       return items.sort();
-  //   }
-  // }
   
   submitHandler = (e) => {
     // console.log(document.getElementById("search"));
@@ -52,54 +86,50 @@ class SideNav extends React.Component {
             </InputGroup>
           </form>
           <hr/>
-
+{/* style={{color:"black", backgroundColor:"lightgray", border:"none", textAlign:"left"}} */}
           <li>Sort By</li>
           <li>
-            <Button id="a_z" style={{color:"black", backgroundColor:"lightgray", border:"none", textAlign:"left"}} href="/sort/a-z" onClick={this.sortItemsBy}>Brand A-Z</Button>
+            <Button class="propButton" href="#">Brand A-Z</Button>
           </li>
           <li>
-            <Button id="z_a" style={{color:"black", backgroundColor:"lightgray", border:"none", textAlign:"left"}} class="propButton" href="/sort/z-a">Brand Z-A</Button>
+            <Button class="propButton" href="#">Brand Z-A</Button>
           </li>
           <li>
-            <Button id="s_xxl" style={{color:"black", backgroundColor:"lightgray", border:"none", textAlign:"left"}} class="propButton" href="#">Size S-XXL</Button>
+            <Button class="propButton" href="#">Size S-XXL</Button>
           </li>
           <li>
-            <Button id="xxl_s" style={{color:"black", backgroundColor:"lightgray", border:"none", textAlign:"left"}} class="propButton" href="#">Size XXL-S</Button>
+            <Button class="propButton" href="#">Size XXL-S</Button>
           </li>
           <li>
-            <Button id="lo_hi" style={{color:"black", backgroundColor:"lightgray", border:"none", textAlign:"left"}} class="propButton" href="#">Price Low to High</Button>
+            <Button class="propButton" href="#">Price Low to High</Button>
           </li>
           <li>
-            <Button id="hi_lo" style={{color:"black", backgroundColor:"lightgray", border:"none", textAlign:"left"}} class="propButton" href="#">Price High to Low</Button>
+            <Button class="propButton" href="#">Price High to Low</Button>
           </li>
           <hr/>
 
           <li>Filter By</li>
           <li>
-            <label>
-              Price $0-$10,000
-              <input
-                id="price-range"
-                type="range"
-                value="2"
-                min="0"
-                max="10000"
-                step="20"
-              />
-            </label>
+            <Typography>Price $0 - $10,000</Typography>
+            {/* <Slider 
+              value={value}
+              onChange={this.handlePriceChange}
+              valueLabelDisplay="auto"
+              aira-labelledby="range-slider"
+              getAriaValueText={valueText}
+            /> */}
+            <RangeSlider />
           </li>
           <li>
-            <label>
-              Size S-XXL
-              <input
-                id="size-range"
-                type="range"
-                value="2"
-                min="0"
-                max="4"
-                step="1"
-              />
-            </label>
+            <Typography>Size S-XXL</Typography>
+            {/* <Slider 
+              value={value}
+              onChange={this.handleChange}
+              valueLabelDisplay="auto"
+              aira-labelledby="range-slider"
+              getAriaValueText={valueText}
+            /> */}
+            <SizeSlider />
           </li>
           <hr/>
 

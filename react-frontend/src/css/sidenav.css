@@ -9,6 +9,13 @@ li {
   margin-bottom: 3px;
 }
 
+button .propButton {
+  color: "black";
+  background-color: "lightgray";
+  border: "none";
+  text-align: "left";
+}
+
 label {
   font-size: 11px;
   padding: 2px;
@@ -21,13 +28,13 @@ InputGroup {
 /* The sidebar menu */
 .sidenav {
   /* Full-height: remove this if you want "auto" height */
-  height: 100%;
-  width: 15%; /* Set the width of the sidebar */
+  height: inherit;
+  width: 20%; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */
   background-color: lightgray; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
+  overflow: auto;
 }
 
 /* The navigation menu links */
@@ -37,6 +44,8 @@ InputGroup {
   font-size: 12px;
   color: #070707;
   display: block;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -52,11 +61,4 @@ InputGroup {
   .sidenav a {
     font-size: 18px;
   }
-}
-
-.propButton {
-  color: black;
-  background-color: lightgray;
-  border: none;
-  text-align: center;
 }

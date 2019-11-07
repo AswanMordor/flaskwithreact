@@ -6,6 +6,9 @@ import "./css/App.css";
 import "./css/navbar.css";
 import { Button } from 'react-bootstrap';
 import banner from "./img/header.png";
+import Login from "./login";
+import Create from "./create";
+
 // import banner from "./img/header2.png";
 
 function App() {
@@ -26,7 +29,7 @@ function App() {
               Find Your Fit
             </Link>
 
-            <Link class="link" to="/createuser">
+            <Link class="link" to="/create">
               Create an Account
             </Link>
 
@@ -47,8 +50,8 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/create/user">
-              <CreateUser />
+            <Route path="/create">
+              <Create />
             </Route>
           </Switch>
         </div>
@@ -57,13 +60,9 @@ function App() {
   );
 }
 
-function CreateUser() {
-  return <h2>Create a User</h2>;
-}
-
-function Login() {
-  return <h2>Login</h2>;
-}
+// function Login() {
+//   return <Login />;
+// }
 
 function about() {
   return <About />
