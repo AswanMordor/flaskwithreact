@@ -1,6 +1,5 @@
 import pytest
-from flask import json
-from pip._vendor import requests
+import requests
 
 
 # Used to return the value 2
