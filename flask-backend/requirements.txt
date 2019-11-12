@@ -1,2 +1,7 @@
 Flask==0.10
 google-api-python-client
+google.cloud
+uuid
+requests
+flask_cors
+os
