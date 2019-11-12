@@ -46,6 +46,15 @@ class FindMyFit extends React.Component {
     this.setState({
       selectedFile: event.target.files[0]
     })
+    console.log(event.target.files[0])
+    fetch(backendUrl+"productSearch", {
+      method: 'POST',
+      body: event.target.files[0]
+    }).then(response => response.json().then(jresponse => {
+      this.setState({requestText: jresponse.results.toString()})
+    })).catch(() => {
+      console.log("ERROR")
+    })
   };
 
   const
