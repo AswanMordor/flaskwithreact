@@ -30,11 +30,12 @@ def gcloud_deploy():
                                        shell=True)
     print(gcloud_app_deploy)
 
+
 def test():
     pytest = subprocess.run(['cd', '../flask-backend', '&&', 'pytest'], check=True,
-                                       stdout=subprocess.PIPE,
-                                       universal_newlines=True,
-                                       shell=True)
+                            stdout=subprocess.PIPE,
+                            universal_newlines=True,
+                            shell=True)
     print(pytest)
 
 
