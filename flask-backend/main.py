@@ -1,10 +1,15 @@
 import flask
 from flask import request
+
+
+app = flask.Flask(__name__)
+
 from google.cloud import storage
 import uuid
 import requests
 from flask_cors import CORS
 import os
+
 
 app = flask.Flask(__name__)
 CORS(app)
@@ -12,6 +17,7 @@ CORS(app)
 @app.route('/')
 def index():
     return flask.render_template("index.html", token="Sucessful Flask Test")
+
 
 @app.route('/temp', methods=('GET', 'POST'))
 def tempCom():
@@ -22,6 +28,7 @@ def tempCom():
         response = flask.jsonify({'res': 'GET REQUEST RECEIVED FROM SERVER'})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
 
 @app.route('/productSearch', methods=('GET' ,'POST'))
 def productSearch():
@@ -69,6 +76,7 @@ def productSearch():
     results = [i["product"]["name"].split("/")[-1] for i in gcsResponse.json()["responses"][0]["productSearchResults"]["results"]] #parse names from gscResponse
     response = flask.jsonify({"results": results})
     return response
+
 
 if __name__ == '__main__':
     app.run(debug=True)
