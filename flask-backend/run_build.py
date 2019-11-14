@@ -56,7 +56,8 @@ if target == "test":
     run_server()
     test()
 if target == "deploy dev":
-    print("Local gcloud deployment not yet supported")
+    print("Running main.py WITHOUT build")
+    run_server()
 if target == "deploy gcloud":
     print("Deploying project to gcloud from flask-backend")
     build()

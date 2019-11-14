@@ -1,0 +1,13 @@
+@import "_variables";
+@import "_splash";
+@import "_login";
+@import "_home";
+
+::selection {
+  color: white;
+  background: $primary-color;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}

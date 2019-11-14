@@ -1,0 +1,54 @@
+#splash {
+  text-align: center;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  // background: linear-gradient(#c3dee0, #e0fdff);
+  // background-image: url("../images/background.png");
+  // background-image: url("https://www.wallpaperflare.com/static/266/831/645/low-poly-3d-cinema-4d-digital-art-wallpaper.jpg?fbclid=IwAR0WxZh__0oK5fugZCjKIru31xwjycXQPvDMH5p_0NTh3X7JEtWpGbaONlI");
+  background-image: url("https://www.photo-elsoar.com/wp-content/images/Empty-runway.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  h1 {
+    color: $primary-color;
+    letter-spacing: 5px;
+  }
+
+  button {
+    background-color: transparent;
+    border-style: solid;
+    border-width: 1px;
+    border-color: $secondary-color;
+    border-radius: 2px;
+    transition: 0.2s ease-in-out;
+    padding: 5px 10px;
+    outline: none;
+    font-family: $body-font;
+  }
+
+  button:hover {
+    background-color: $primary-color;
+    color: white;
+    border-color: transparent;
+  }
+
+  .login-button {
+    margin-top: 15px;
+  }
+
+  p {
+    font-family: $body-font;
+  }
+
+  .text-container {
+    margin-top: -100px;
+    background-color: rgba(white, 0.4);
+    padding: 50px;
+    border-radius: px;
+  }
+}
