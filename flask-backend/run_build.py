@@ -61,8 +61,10 @@ if target == "test":
     print("Running Tests")
     build()
     run_thread = threading.Thread(target=run_server, args=())
+    run_thread.setDaemon(True)
     run_thread.start()
     test_os()
+    sys.exit(0)
 if target == "test dev":
     print("Running Tests WITHOUT building")
     run_thread = threading.Thread(target=run_server, args=())
