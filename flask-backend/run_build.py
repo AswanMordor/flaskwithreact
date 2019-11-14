@@ -1,4 +1,7 @@
+import os
 import subprocess
+import sys
+import threading
 import webbrowser
 
 
@@ -39,7 +42,11 @@ def test():
     print(pytest)
 
 
-target_types = ["list", "build", "test", "deploy", "deploy dev", "deploy gcloud"]
+def test_os():
+    os.system("cd ../flask-backend && pytest")
+
+
+target_types = ["list", "build", "test", "deploy", "deploy dev", "deploy gcloud", "test dev"]
 target = input("Enter a target: ")
 if target == "list":
     print("Target Types: \n", target_types)
@@ -53,8 +60,16 @@ if target == "build":
 if target == "test":
     print("Running Tests")
     build()
-    run_server()
-    test()
+    run_thread = threading.Thread(target=run_server, args=())
+    run_thread.start()
+    test_os()
+if target == "test dev":
+    print("Running Tests WITHOUT building")
+    run_thread = threading.Thread(target=run_server, args=())
+    run_thread.setDaemon(True)
+    run_thread.start()
+    test_os()
+    sys.exit(0)
 if target == "deploy dev":
     print("Running main.py WITHOUT build")
     run_server()
