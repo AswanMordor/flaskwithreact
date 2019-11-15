@@ -10,7 +10,7 @@ import image2 from "../../products/white blouse.jpeg";
 import image3 from "../../products/sweatpants.jpeg";
 import image4 from "../../products/knit_dress.jpeg";
 
-
+const backendUrl = "http://127.0.0.1:5000/"
 class Home extends Component {
 
   constructor(props) {
@@ -26,6 +26,55 @@ class Home extends Component {
   cardSelect(cardId){
     this.setState({ selectedCard: cardId });
   }
+
+  uploadClick() {
+    document.getElementById("uploadImg").click()
+  }
+
+  tempGet() {
+    fetch(backendUrl+"temp", {
+      method: 'GET'
+    }).then(response => response.json().then(jresponse => {
+      console.log(jresponse)
+      this.setState({requestText: jresponse.res})
+    })).catch(() => {
+      console.log("ERROR")
+    })
+}
+
+  tempPost() {
+    fetch(backendUrl+"temp", {
+      method: 'POST'
+    }).then(response => response.json().then(jresponse => {
+      console.log(jresponse)
+      this.setState({requestText: jresponse.res})
+    })).catch(() => {
+      console.log("ERROR")
+    })
+  }
+
+
+  state = {
+    selectedFile: null
+  }
+
+  fileUploadHandler = event => {
+    this.setState({
+      selectedFile: event.target.files[0]
+    })
+      const data = new FormData();
+    data.append('file', event.target.files[0]);
+    //data.append('filename', this.fileName.value);
+    //console.log(event.target.files[0])
+    fetch(backendUrl+"productSearch", {
+      method: 'POST',
+      body: data
+    }).then(response => response.json().then(jresponse => {
+      this.setState({requestText: jresponse.results.toString()})
+    })).catch(() => {
+      console.log("ERROR")
+    })
+  };
 
   render() {
     return (
@@ -137,7 +186,21 @@ class Home extends Component {
           </Col>
           </Row>
         </Container>
+          <div className="upload">
+              <input id="uploadImg" type="file" onChange={this.fileUploadHandler} hidden/>
+              <button type="button" className="btn btn-outline-dark" onClick={this.uploadClick.bind(this)}>Upload
+              </button>
+              <button type="button" className="btn btn-outline-dark" onClick={this.tempGet.bind(this)}>SEND GET
+                  REQUEST
+              </button>
+              <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)}>SEND POST
+                  REQUEST
+              </button>
+              <button type="button" className="btn btn-outline-dark">{this.state.requestText}</button>
+              {/* <img src={require(this.state.selectedFile)} /> */}
+          </div>
       </div>
+
     );
   }
 }
