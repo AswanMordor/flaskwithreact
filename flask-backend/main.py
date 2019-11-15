@@ -9,6 +9,8 @@ from flask_cors import CORS
 import os
 import subprocess
 
+from werkzeug.utils import secure_filename
+
 app = flask.Flask(__name__)
 
 app = flask.Flask(__name__)
@@ -57,20 +59,26 @@ def tempCom():
 
 @app.route('/productSearch', methods=('GET', 'POST'))
 def productSearch():
-    print("sdfg")
+    print("sdfggg")
     bucket_name = "fitfinder-3e49c.appspot.com"
     imageName = str(uuid.uuid4())
+    print(imageName)
+    file = request.files['file']
+    filename = secure_filename(file.filename).replace(".jpg", "")
+    print(filename)
+    # filename = request.files['filename']
+    # print(filename)
     storage_client = storage.Client.from_service_account_json(
         str(Path("FitFinder-905180b5f6de.json").absolute()))
     bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(imageName)
+    blob = bucket.blob(filename)
     response = flask.jsonify({"res": "DONE"})
     response.headers.add('Access-Control-Allow-Origin', '*')
-    with open(imageName, "wb") as outfile:
+    with open(filename, "wb") as outfile:
         outfile.write(request.data)
-    with open(imageName, "rb") as my_file:
+    with open(filename, "rb") as my_file:
         blob.upload_from_file(my_file)
-    os.remove(imageName)
+    os.remove(filename)
 
     # mport google.auth.transport.requests
     # creds, projects = google.auth.default()
@@ -88,12 +96,13 @@ def productSearch():
     headers = {  # TODO: get auth token dynamically
         "Content-Type": "application/json"
     }
+    #HARDCODED png below that works, replace ${image.name} (which is the name of the image lol) with + filename for actual use
     payload = {
         "requests": [
             {
                 "image": {
                     "source": {
-                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/" + imageName
+                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/${image.name}"
                     }
                 },
                 "features": [
