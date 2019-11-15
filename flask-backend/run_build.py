@@ -28,7 +28,7 @@ def run_server():
 
 def open_browser():
     print("Attempting to open the browser to localhost:5000")
-    webbroswer_address = "localhost:5000"
+    webbroswer_address = "http://127.0.0.1:5000/"
     webbrowser.open_new_tab(webbroswer_address)
 
 
