@@ -1,11 +1,18 @@
 import React, { Component } from "react";
-import { DropdownButton, DropdownItem, Card, CardImg, Container, Row, Col, Button, InputGroup } from 'react-bootstrap';
+import { DropdownButton, DropdownItem, Card, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
 // import DropdownItem from "react-bootstrap/DropdownItem";
 import ButtonToolBar from "react-bootstrap/ButtonToolbar";
 import ItemList from "./Item";
 import { CARDS } from "./cards";
 
 import Immutable from 'immutable';
+
+const search = {
+    justifyContent: 'right',
+    float: 'right',
+    alignContent: 'right',
+    flex: 1,
+}
 
 class Home extends Component {
   // state = {
@@ -122,6 +129,15 @@ class Home extends Component {
               </div>
             </div>
           </DropdownButton>
+
+          <InputGroup className="md-4" style={search}>
+            <FormControl placeholder="Search" />
+            <InputGroup.Append class="mb-4" >
+              <button class="btn btn-outline-secondary border-left-0 border" type="button">
+                    <i class="fa fa-search"></i>
+              </button>
+            </InputGroup.Append>
+          </InputGroup>
         </ButtonToolBar>
         <hr />
           {/* <Items card={this.state.cards} /> */}

@@ -15,7 +15,9 @@ const ItemList = ({ item }) => (
                 <p>{item.price}</p>
             </Card.Body>
         </Card> */}
-        <img src={item.image} alt={item.name} />
+        <a href={item.link} target='_blank'>
+            <img src={item.image} alt={item.name} />
+        </a>
         <h4>{item.name}</h4>
         <h5>${item.price}</h5>
     </div>
