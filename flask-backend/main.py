@@ -5,6 +5,7 @@ import uuid
 import requests
 from flask_cors import CORS
 import os
+import subprocess
 
 app = flask.Flask(__name__)
 
@@ -42,8 +43,13 @@ def productSearch():
     with open(imageName, "rb") as my_file:
         blob.upload_from_file(my_file)
     os.remove(imageName)
+    authToken = "Bearer "  + subprocess.run(['gcloud beta auth application-default print-access-token'], check=True,
+                                   stdout=subprocess.PIPE,
+                                   universal_newlines=True,
+                                   shell=True).stdout
+    authToken = authToken.replace("\n", "")
     headers = {  # TODO: get auth token dynamically
-        "Authorization": "Bearer ya29.c.Kl6wB0is7W_-Qn5tUHzdIQjcxlqhs4jz9TMchIn4vvfKIqai3dEiQcLj0vHMLvQKSn54mkbgRYQkkQh86Yy8Z8Q2wfQ06cJGmSMcHucwUndmLmxZ0wun_zjvL2tFO_CG",
+        "Authorization": authToken,
         "Content-Type": "application/json"
     }
     payload = {
@@ -71,6 +77,8 @@ def productSearch():
         ]
     }
     gcsResponse = requests.post('https://vision.googleapis.com/v1/images:annotate', json=payload, headers=headers)
+    if (gcsResponse.status_code != 200):
+        response.jsonify({"results": "Server Error"})
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
