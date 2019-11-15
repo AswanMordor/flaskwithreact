@@ -21,7 +21,14 @@ def run_server():
                                  universal_newlines=True,
                                  shell=True)
     print(python_main)
-    webbroswer_address = "http://www.google.com"
+    browser_thread = threading.Thread(target=open_browser, args=())
+    browser_thread.setDaemon(True)
+    browser_thread.start()
+
+
+def open_browser():
+    print("Attempting to open the browser to localhost:5000")
+    webbroswer_address = "localhost:5000"
     webbrowser.open_new_tab(webbroswer_address)
 
 
