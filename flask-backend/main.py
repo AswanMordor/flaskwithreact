@@ -11,11 +11,14 @@ app = flask.Flask(__name__)
 app = flask.Flask(__name__)
 CORS(app)
 
-
-@app.route('/')
-def index():
+@app.route('/', defaults={'path': '/'})
+@app.route('/<path:path>')
+def catch_all(path):
     return flask.render_template("index.html", token="Sucessful Flask Test")
 
+# @app.route('/')
+# def index():
+#     return flask.render_template("index.html", token="Sucessful Flask Test")
 
 @app.route('/temp', methods=('GET', 'POST'))
 def tempCom():
@@ -79,3 +82,4 @@ def productSearch():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
