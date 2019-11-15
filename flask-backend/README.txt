@@ -1,0 +1,1 @@
+export GOOGLE_APPLICATION_CREDENTIALS="/Users/ap/Projects/flaskwithreact/flask-backend/FitFinder-6f47aeb6b98e.json"
