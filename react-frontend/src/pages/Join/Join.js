@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Row } from "reactstrap";
-// import * as firebase from "firebase";
+// import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import fire from "../../credentials/Fire";
 
 class Join extends Component {
   state = {
@@ -16,36 +18,16 @@ class Join extends Component {
     });
   };
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   firebase
-  //     .auth()
-  //     .createUserWithEmailAndPassword(this.state.email, this.state.password);
-  // };
+  handleSubmit = e => {
+    e.preventDefault();
+    fire
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password);
+  };
 
   render() {
     return (
       <Form className="container" onSubmit={this.handleSubmit}>
-        {/* <FormGroup>
-          <Label for="firstName">Hello</Label>
-          <Input
-            type="firstName"
-            name="firstName"
-            id="firstName"
-            placeholder="example@example.com"
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="lastName">World</Label>
-          <Input
-            type="lastName"
-            name="lastName"
-            id="lastName"
-            placeholder="example@example.com"
-            onChange={this.handleChange}
-          />
-        </FormGroup> */}
         <FormGroup>
           <Label for="email">Email</Label>
           <Input

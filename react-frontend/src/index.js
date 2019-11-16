@@ -3,11 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-// import * as firebase from "firebase";
-// import firebaseConfig from "./credentials/firebase.config";
-
-// firebase.initializeApp(firebaseConfig);
-export const AuthContext = React.createContext(null);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

@@ -16,7 +16,6 @@ app = flask.Flask(__name__)
 app = flask.Flask(__name__)
 CORS(app)
 
-
 def explicit():
     from google.cloud import storage
 
@@ -39,6 +38,10 @@ def explicit():
 
 explicit()
 
+@app.route('/', defaults={'path': '/'})
+@app.route('/<path:path>')
+def catch_all(path):
+    return flask.render_template("index.html", token="Sucessful Flask Test")
 
 @app.route('/')
 def index():
@@ -78,6 +81,14 @@ def productSearch():
         outfile.write(request.data)
     with open(filename, "rb") as my_file:
         blob.upload_from_file(my_file)
+
+    os.remove(imageName)
+    authToken = "Bearer " + subprocess.run(['gcloud beta auth application-default print-access-token'], check=True,
+                                           stdout=subprocess.PIPE,
+                                           universal_newlines=True,
+                                           shell=True).stdout
+    authToken = authToken.replace("\n", "")
+
     os.remove(filename)
 
     # mport google.auth.transport.requests
@@ -93,6 +104,7 @@ def productSearch():
     # authToken = str(creds.token)
     # authToken = authToken.replace("\n", "")
     # print(authToken)
+
     headers = {  # TODO: get auth token dynamically
         "Content-Type": "application/json"
     }
@@ -121,11 +133,12 @@ def productSearch():
             }
         ]
     }
+
     gcsResponse = requests.post('https://vision.googleapis.com/v1/images:annotate?key'
                                 '=AIzaSyAZJiwWzXaz9Oduwy5NUHnX6ptzuE3If7E', json=payload, headers=headers)
-    print("sdfghjk", flush=True)
-    print(str(response))
-    print(str(gcsResponse.text))
+    if (gcsResponse.status_code != 200):
+        response.jsonify({"results": "Server Error"})
+
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
