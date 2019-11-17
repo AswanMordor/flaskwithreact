@@ -67,31 +67,37 @@ def productSearch():
     imageName = str(uuid.uuid4())
     print(imageName)
     file = request.files['file']
-    filename = secure_filename(file.filename).replace(".jpg", "")
-    print(filename)
+    filename = secure_filename(file.filename)
     # filename = request.files['filename']
     # print(filename)
     storage_client = storage.Client.from_service_account_json(
         str(Path("FitFinder-905180b5f6de.json").absolute()))
     bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(filename)
+    filepath, file_extension = os.path.splitext("./" + filename)
+    blob = bucket.blob(imageName+file_extension)
     response = flask.jsonify({"res": "DONE"})
     response.headers.add('Access-Control-Allow-Origin', '*')
-    with open(filename, "wb") as outfile:
-        outfile.write(request.data)
-    with open(filename, "rb") as my_file:
-        blob.upload_from_file(my_file)
 
-    os.remove(imageName)
-    authToken = "Bearer " + subprocess.run(['gcloud beta auth application-default print-access-token'], check=True,
-                                           stdout=subprocess.PIPE,
-                                           universal_newlines=True,
-                                           shell=True).stdout
-    authToken = authToken.replace("\n", "")
+    file.save("./"+filename)
+    os.rename("./"+filename, "./"+imageName+file_extension)
 
-    os.remove(filename)
+    #with open(filename, "wb") as outfile:
+    #   outfile.write(request.data)
+    #with open(filename, "rb") as my_file:
+    #   blob.upload_from_file(my_file)
+    blob.upload_from_filename("./"+imageName+file_extension)
+    print("./" + imageName + file_extension)
+    #os.remove("./"+imageName)
 
-    # mport google.auth.transport.requests
+   # authToken = "Bearer " + subprocess.run(['gcloud beta auth application-default print-access-token'], check=True,
+                                           #stdout=subprocess.PIPE,
+                                           #universal_newlines=True,
+                                           #shell=True).stdout
+   # authToken = authToken.replace("\n", "")
+    os.remove("./"+imageName+file_extension)
+    #os.remove(filename)
+
+    # import google.auth.transport.requests
     # creds, projects = google.auth.default()
 
     # # creds.valid is False, and creds.token is None
@@ -108,13 +114,15 @@ def productSearch():
     headers = {  # TODO: get auth token dynamically
         "Content-Type": "application/json"
     }
+    print("got to payload definition")
     #HARDCODED png below that works, replace ${image.name} (which is the name of the image lol) with + filename for actual use
+    #When the firebase upload is finished
     payload = {
         "requests": [
             {
                 "image": {
                     "source": {
-                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/${image.name}"
+                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/"+imageName+file_extension
                     }
                 },
                 "features": [
@@ -136,9 +144,9 @@ def productSearch():
 
     gcsResponse = requests.post('https://vision.googleapis.com/v1/images:annotate?key'
                                 '=AIzaSyAZJiwWzXaz9Oduwy5NUHnX6ptzuE3If7E', json=payload, headers=headers)
-    if (gcsResponse.status_code != 200):
+    if gcsResponse.status_code != 200:
         response.jsonify({"results": "Server Error"})
-
+    print("gcs reponse is: ", gcsResponse.text)
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
