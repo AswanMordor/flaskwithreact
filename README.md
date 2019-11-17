@@ -1,12 +1,13 @@
 # flaskwithreact
 Welcome to FitFinder's Temporary Github Page
 
-<b>IF run_build.py is not working on your machine, running the server is a simple 2 step process:</b></n>
+<b>IF run_build.py is not working on your machine, running the server is a simple 2 step process:</b></br>
 Preprocess:
 1. If this is a fresh pull, delete any node_modules folders and in the ./react-frontend directrory run ' npm install '.
+</br>
 Running the server:
-1. To compile the React code into something flask can use, in the ./react-frontend directory run ' npm run build'.
-2. To deploy the flask server locally, in the ./flask-backend directory run main.py in your python environment.
+</br>1. To compile the React code into something flask can use, in the ./react-frontend directory run ' npm run build'.
+</br>2. To deploy the flask server locally, in the ./flask-backend directory run main.py in your python environment.
 
 </n></br>
 <b>Troubleshooting</b></br>
