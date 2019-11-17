@@ -51,11 +51,28 @@ def index():
 @app.route('/temp', methods=('GET', 'POST'))
 def tempCom():
     print("sdfg")
+    from google.cloud import storage
+
+    # win_export_commend = subprocess.run(
+    #    ['setx', 'GOOGLE_APPLICATION_CREDENTIALS', str(Path("FitFinder-905180b5f6de.json").absolute())],
+    #   check=True,
+    #  stdout=subprocess.PIPE,
+    #  universal_newlines=True,
+    #  shell=True).stdout
+    # print("win export is: ", win_export_commend)
+    # Explicitly use service account credentials by specifying the private key
+    # file.
+    storage_client = storage.Client.from_service_account_json(
+        str(Path("FitFinder-905180b5f6de.json").absolute()))
+
+    # Make an authenticated API request
+    buckets = list(storage_client.list_buckets())
+    blist = ' '.join([str(elem) for elem in buckets])
     response = flask.jsonify({'res': "ERROR"})
     if request.method == 'POST':
         response = flask.jsonify({'res': 'POST REQUEST RECEIVED FROM SERVER'})
     if request.method == 'GET':
-        response = flask.jsonify({'res': 'GET REQUEST RECEIVED FROM SERVER'})
+        response = flask.jsonify({'res': 'GET REQUEST RECEIVED FROM SERVER'+blist})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -72,21 +89,22 @@ def productSearch():
     # print(filename)
     storage_client = storage.Client.from_service_account_json(
         str(Path("FitFinder-905180b5f6de.json").absolute()))
+
     bucket = storage_client.get_bucket(bucket_name)
-    filepath, file_extension = os.path.splitext("./" + filename)
+    filepath, file_extension = os.path.splitext("/tmp/" + filename)
     blob = bucket.blob(imageName+file_extension)
     response = flask.jsonify({"res": "DONE"})
     response.headers.add('Access-Control-Allow-Origin', '*')
 
-    file.save("./"+filename)
-    os.rename("./"+filename, "./"+imageName+file_extension)
-
+    file.save("/tmp/"+filename)
+    os.rename("/tmp/"+filename, "/tmp/"+imageName+file_extension)
     #with open(filename, "wb") as outfile:
     #   outfile.write(request.data)
     #with open(filename, "rb") as my_file:
     #   blob.upload_from_file(my_file)
-    blob.upload_from_filename("./"+imageName+file_extension)
-    print("./" + imageName + file_extension)
+    blob.upload_from_filename("/tmp/"+imageName+file_extension)
+    #blob.upload_from_file(file)
+    print("/tmp/" + imageName + file_extension)
     #os.remove("./"+imageName)
 
    # authToken = "Bearer " + subprocess.run(['gcloud beta auth application-default print-access-token'], check=True,
@@ -94,7 +112,8 @@ def productSearch():
                                            #universal_newlines=True,
                                            #shell=True).stdout
    # authToken = authToken.replace("\n", "")
-    os.remove("./"+imageName+file_extension)
+    os.remove("/tmp/"+imageName+file_extension)
+
     #os.remove(filename)
 
     # import google.auth.transport.requests
@@ -150,6 +169,7 @@ def productSearch():
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
+    #return flask.jsonify({'results': 'POST REQUEST RECEIVED FROM SERVERRRrrrr'})
     return response
 
 
