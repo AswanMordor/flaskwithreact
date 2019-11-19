@@ -81,42 +81,17 @@ def productSearch():
     file.save("./"+filename)
     os.rename("./"+filename, "./"+imageName+file_extension)
 
-    #with open(filename, "wb") as outfile:
-    #   outfile.write(request.data)
-    #with open(filename, "rb") as my_file:
-    #   blob.upload_from_file(my_file)
     blob.upload_from_filename("./"+imageName+file_extension)
     print("./" + imageName + file_extension)
-    #os.remove("./"+imageName)
 
-   # authToken = "Bearer " + subprocess.run(['gcloud beta auth application-default print-access-token'], check=True,
-                                           #stdout=subprocess.PIPE,
-                                           #universal_newlines=True,
-                                           #shell=True).stdout
-   # authToken = authToken.replace("\n", "")
+    #os.remove("./"+imageName)
     os.remove("./"+imageName+file_extension)
     #os.remove(filename)
 
-    # import google.auth.transport.requests
-    # creds, projects = google.auth.default()
-
-    # # creds.valid is False, and creds.token is None
-    # Need to refresh credentials to populate those
-
-    # auth_req = google.auth.transport.requests.Request()
-    # creds.refresh(auth_req)
-
-    # Now you can use creds.token
-    # authToken = str(creds.token)
-    # authToken = authToken.replace("\n", "")
-    # print(authToken)
-
-    headers = {  # TODO: get auth token dynamically
+    headers = {
         "Content-Type": "application/json"
     }
     print("got to payload definition")
-    #HARDCODED png below that works, replace ${image.name} (which is the name of the image lol) with + filename for actual use
-    #When the firebase upload is finished
     payload = {
         "requests": [
             {
