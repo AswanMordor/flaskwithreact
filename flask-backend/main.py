@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import json
 import flask
 from flask import request
 from google.cloud import storage
@@ -8,7 +8,6 @@ import requests
 from flask_cors import CORS
 import os
 import subprocess
-
 from werkzeug.utils import secure_filename
 
 app = flask.Flask(__name__)
@@ -125,6 +124,11 @@ def productSearch():
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
+
+    for result in results:
+        print("Attempting to save: ", result)
+        file_blob = bucket.blob(result)
+        file_blob.download_to_filename(result)
     return response
 
 
