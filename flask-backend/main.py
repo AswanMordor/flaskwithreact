@@ -125,10 +125,11 @@ def productSearch():
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
 
+    os.mkdir("static/react/imgs/")
     for result in results:
         print("Attempting to save: ", result)
         file_blob = bucket.blob(result)
-        file_blob.download_to_filename(result)
+        file_blob.download_to_filename("static/react/imgs/"+result)
     return response
 
 
