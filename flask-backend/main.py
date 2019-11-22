@@ -1,5 +1,4 @@
 from pathlib import Path
-import json
 import flask
 from flask import request
 from google.cloud import storage
@@ -7,7 +6,6 @@ import uuid
 import requests
 from flask_cors import CORS
 import os
-import subprocess
 from werkzeug.utils import secure_filename
 
 app = flask.Flask(__name__)
@@ -18,14 +16,6 @@ CORS(app)
 
 def explicit():
     from google.cloud import storage
-
-    # win_export_commend = subprocess.run(
-    #    ['setx', 'GOOGLE_APPLICATION_CREDENTIALS', str(Path("FitFinder-905180b5f6de.json").absolute())],
-    #   check=True,
-    #  stdout=subprocess.PIPE,
-    #  universal_newlines=True,
-    #  shell=True).stdout
-    # print("win export is: ", win_export_commend)
     # Explicitly use service account credentials by specifying the private key
     # file.
     storage_client = storage.Client.from_service_account_json(
@@ -42,17 +32,16 @@ explicit()
 @app.route('/', defaults={'path': '/'})
 @app.route('/<path:path>')
 def catch_all(path):
-    return flask.render_template("index.html", token="Sucessful Flask Test")
+    return flask.render_template("index.html", token="Successful Flask Test")
 
 
 @app.route('/')
 def index():
-    return flask.render_template("index.html", token="Sucessful Flask Test")
+    return flask.render_template("index.html", token="Successful Flask Test")
 
 
 @app.route('/temp', methods=('GET', 'POST'))
 def tempCom():
-    print("sdfg")
     response = flask.jsonify({'res': "ERROR"})
     if request.method == 'POST':
         response = flask.jsonify({'res': 'POST REQUEST RECEIVED FROM SERVER'})
@@ -64,14 +53,11 @@ def tempCom():
 
 @app.route('/productSearch', methods=('GET', 'POST'))
 def productSearch():
-    print("sdfggg")
     bucket_name = "fitfinder-3e49c.appspot.com"
     imageName = str(uuid.uuid4())
     print(imageName)
     file = request.files['file']
     filename = secure_filename(file.filename)
-    # filename = request.files['filename']
-    # print(filename)
     storage_client = storage.Client.from_service_account_json(
         str(Path("FitFinder-905180b5f6de.json").absolute()))
     bucket = storage_client.get_bucket(bucket_name)
@@ -86,9 +72,7 @@ def productSearch():
     blob.upload_from_filename("./" + imageName + file_extension)
     print("./" + imageName + file_extension)
 
-    # os.remove("./"+imageName)
     os.remove("./" + imageName + file_extension)
-    # os.remove(filename)
 
     headers = {
         "Content-Type": "application/json"
