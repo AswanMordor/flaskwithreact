@@ -51,7 +51,7 @@ class Login extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <Button onChange={this.handleSubmit}>Login</Button>
+        <Button id="login-button" onChange={this.handleSubmit}>Login</Button>
         <Link to="/join">
           <Button>Join</Button>
         </Link>

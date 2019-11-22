@@ -190,7 +190,7 @@ class Home extends Component {
               <button type="button" className="btn btn-outline-dark" onClick={this.uploadClick.bind(this)} hidden>Upload
               </button>
               <button type="button" className="btn btn-outline-dark" onClick={this.tempGet.bind(this)} hidden>SEND GET
-                  REQUEST
+                  REQUEST --!!HOME!!--
               </button>
               <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)} hidden>SEND POST
                   REQUEST
