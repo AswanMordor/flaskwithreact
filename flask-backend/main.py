@@ -15,6 +15,7 @@ app = flask.Flask(__name__)
 app = flask.Flask(__name__)
 CORS(app)
 
+
 def explicit():
     from google.cloud import storage
 
@@ -37,10 +38,12 @@ def explicit():
 
 explicit()
 
+
 @app.route('/', defaults={'path': '/'})
 @app.route('/<path:path>')
 def catch_all(path):
     return flask.render_template("index.html", token="Sucessful Flask Test")
+
 
 @app.route('/')
 def index():
@@ -73,19 +76,19 @@ def productSearch():
         str(Path("FitFinder-905180b5f6de.json").absolute()))
     bucket = storage_client.get_bucket(bucket_name)
     filepath, file_extension = os.path.splitext("./" + filename)
-    blob = bucket.blob(imageName+file_extension)
+    blob = bucket.blob(imageName + file_extension)
     response = flask.jsonify({"res": "DONE"})
     response.headers.add('Access-Control-Allow-Origin', '*')
 
-    file.save("./"+filename)
-    os.rename("./"+filename, "./"+imageName+file_extension)
+    file.save("./" + filename)
+    os.rename("./" + filename, "./" + imageName + file_extension)
 
-    blob.upload_from_filename("./"+imageName+file_extension)
+    blob.upload_from_filename("./" + imageName + file_extension)
     print("./" + imageName + file_extension)
 
-    #os.remove("./"+imageName)
-    os.remove("./"+imageName+file_extension)
-    #os.remove(filename)
+    # os.remove("./"+imageName)
+    os.remove("./" + imageName + file_extension)
+    # os.remove(filename)
 
     headers = {
         "Content-Type": "application/json"
@@ -96,7 +99,7 @@ def productSearch():
             {
                 "image": {
                     "source": {
-                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/"+imageName+file_extension
+                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/" + imageName + file_extension
                     }
                 },
                 "features": [
@@ -129,7 +132,7 @@ def productSearch():
     for result in results:
         print("Attempting to save: ", result)
         file_blob = bucket.blob(result)
-        file_blob.download_to_filename("static/react/imgs/"+result)
+        file_blob.download_to_filename("static/react/imgs/" + result)
     return response
 
 

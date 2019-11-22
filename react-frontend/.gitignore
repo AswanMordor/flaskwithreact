@@ -11,9 +11,6 @@
 # production
 /build
 
-# credentials
-/src/credentials
-/src/pages/Main/firebase.config.js
 
 # misc
 .DS_Store
