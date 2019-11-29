@@ -9,7 +9,7 @@ class Splash extends Component {
           <h1>Fit Finder</h1>
           <p>Find your fits here!</p>
           <Link to="/login">
-            <button>Enter</button>
+            <button id="enter-button">Enter</button>
           </Link>
         </div>
       </div>

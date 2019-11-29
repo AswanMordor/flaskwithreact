@@ -126,10 +126,9 @@ class Home extends Component {
           {/* <Items card={this.state.cards} /> */}
         
         <div class="inputGroup">
-          <input type="file"/>
-          <Button variant="secondary">
-            Submit
-          </Button>
+          <input id="uploadImg" type="file" onChange={this.fileUploadHandler} hidden/>
+              <Button type="button" variant="secondary" onClick={this.uploadClick.bind(this)}>Upload
+              </Button>
         </div>
 
         <br />
@@ -188,15 +187,15 @@ class Home extends Component {
         </Container>
           <div className="upload">
               <input id="uploadImg" type="file" onChange={this.fileUploadHandler} hidden/>
-              <button type="button" className="btn btn-outline-dark" onClick={this.uploadClick.bind(this)}>Upload
+              <button type="button" className="btn btn-outline-dark" onClick={this.uploadClick.bind(this)} hidden>Upload
               </button>
-              <button type="button" className="btn btn-outline-dark" onClick={this.tempGet.bind(this)}>SEND GET
+              <button type="button" className="btn btn-outline-dark" onClick={this.tempGet.bind(this)} hidden>SEND GET
+                  REQUEST --!!HOME!!--
+              </button>
+              <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)} hidden>SEND POST
                   REQUEST
               </button>
-              <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)}>SEND POST
-                  REQUEST
-              </button>
-              <button type="button" className="btn btn-outline-dark">{this.state.requestText}</button>
+              <button type="button" className="btn btn-outline-dark" hidden>{this.state.requestText}</button>
               {/* <img src={require(this.state.selectedFile)} /> */}
           </div>
       </div>
