@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Splash from "../Splash";
 import Home from "../Home";
+import Trending from "../Trending";
 import Login from "../Login";
 import Join from "../Join";
 import fire from "../../credentials/Fire";
@@ -33,7 +34,13 @@ class Main extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
-        this.props.history.push("/home");
+        if(!this.props.location["pathname"].includes("trending")){
+            this.props.history.push("/home");
+            console.log("Pushing to home");
+        }
+        else{
+            console.log("staying on trending");
+        }
       } else {
         this.setState({ user: null });
       }
@@ -55,6 +62,9 @@ class Main extends Component {
             {this.state.user ? (
               <React.Fragment>
                 <NavItem>
+                  <NavLink href="/trending">Trending</NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink href="/home">Home</NavLink>
                 </NavItem>
                 <NavItem>
@@ -74,6 +84,7 @@ class Main extends Component {
         <Switch>
           <Route exact path="/" component={Splash} />
           <Route path="/home" component={Home} />
+          <Route path="/trending" component={Trending} />
           <Route path="/login" component={Login} />
           <Route path="/join" component={Join} />
         </Switch>
