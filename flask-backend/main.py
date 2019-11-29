@@ -8,13 +8,23 @@ import requests
 from flask_cors import CORS
 import os
 import subprocess
+import json
+
+import firebase_admin
+import google.cloud
+from firebase_admin import credentials, firestore
+
 
 from werkzeug.utils import secure_filename
 
 app = flask.Flask(__name__)
-
-app = flask.Flask(__name__)
 CORS(app)
+
+cred = credentials.Certificate("../../credentials/fitfinder.json")
+
+firebase_app = firebase_admin.initialize_app(cred)
+
+read = firestore.client()
 
 def explicit():
     from google.cloud import storage
@@ -143,6 +153,46 @@ def productSearch():
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
     return response
+
+@app.route('/trendingUpdate', methods=('GET', 'POST'))
+def trendingUpdate():
+
+
+    data = read.collection(u'Brands').document(u'H&M').collection(u'Products').where(u'likes',u'>',0).order_by(
+    u'likes', direction=firestore.Query.DESCENDING).limit(10).stream()
+
+    try:
+
+        array = {}
+        for doc in data:
+            dict = doc.to_dict()
+            prodInf = {
+                'img' : dict['Image'],
+                'name' :  dict['Name'],
+                'link' : dict['Link'],
+                'price' : dict['Price'],
+                'likes' : dict['likes']
+            }
+            #prodInf['key'] = doc.id
+            array[doc.id]= prodInf
+            
+        app.config["JSON_SORT_KEYS"] = False
+        response = flask.jsonify({'products' : array})
+        app.config["JSON_SORT_KEYS"] = True
+        return response
+    except google.cloud.exceptions.NotFound:
+        print("trendingUpdate failed")
+        return "trendingUpdate failed"
+
+
+
+
+@app.route('/addLike', methods=('GET','POST'))
+def addLike():
+    global read
+    key = request.args['key']
+    read.collection(u'Brands').document(u'H&M').collection(u'Products').document(key).update({"likes": firestore.Increment(1)})
+    return 'Sucessful'
 
 
 if __name__ == '__main__':
