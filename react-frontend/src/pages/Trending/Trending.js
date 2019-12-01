@@ -7,7 +7,7 @@ import Items from "./Items";
 
 
 
-const backendUrl = "http://127.0.0.1:5000/"
+const backendUrl = "https://fitfinderstatic.appspot.com/"
 
 let items;
 

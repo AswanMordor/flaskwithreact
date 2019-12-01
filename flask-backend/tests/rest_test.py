@@ -22,7 +22,7 @@ def test_pytesterror():
 
 # tests the local server for the GET REQUEST
 def test_restget():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -45,7 +45,7 @@ def test_restget():
 
 # tests the local server for the POST REQUEST
 def test_restpost():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -69,7 +69,7 @@ def test_restpost():
 
 # tests PUT should return 405
 def test_restput():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -93,7 +93,7 @@ def test_restput():
 
 # tests PATCH should return 405
 def test_restpatch():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -117,7 +117,7 @@ def test_restpatch():
 
 # tests DELETE should return 405
 def test_restdelete():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -141,7 +141,7 @@ def test_restdelete():
 
 # tests COPY should return 405
 def test_restcopy():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -165,7 +165,7 @@ def test_restcopy():
 
 # tests HEAD should return 200
 def test_resthead():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -189,7 +189,7 @@ def test_resthead():
 
 # tests OPTION should return 200
 def test_restoptions():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -213,7 +213,7 @@ def test_restoptions():
 
 # tests LINK should return 405
 def test_restlink():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -236,7 +236,7 @@ def test_restlink():
 
 # tests UNLINK should return 405
 def test_restunlink():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -259,7 +259,7 @@ def test_restunlink():
 
 # tests PURGE should return 405
 def test_restpurge():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -282,7 +282,7 @@ def test_restpurge():
 
 # tests LOCK should return 405
 def test_restlock():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -305,7 +305,7 @@ def test_restlock():
 
 # tests UNLOCK should return 405
 def test_restunlock():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -328,7 +328,7 @@ def test_restunlock():
 
 # tests PROPFIND should return 405
 def test_restunpropfind():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",
@@ -351,7 +351,7 @@ def test_restunpropfind():
 
 # tests VIEW should return 405
 def test_restunview():
-    url = "http://127.0.0.1:5000/temp"
+    url = "https://fitfinderstatic.appspot.com/temp"
 
     headers = {
         'User-Agent': "PostmanRuntime/7.19.0",

@@ -38,6 +38,7 @@ class Join extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
+        <Input id="join-page" hidden/>
         <FormGroup>
           <Label for="password">Password</Label>
           <Input
@@ -48,7 +49,7 @@ class Join extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <Button type="submit">Join</Button>
+        <Button type="submit" id="join-button" onChange={this.handleSubmit}>Join</Button>
       </Form>
     );
   }

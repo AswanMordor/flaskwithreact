@@ -16,15 +16,12 @@ from firebase_admin import credentials, firestore
 
 from werkzeug.utils import secure_filename
 
-
-
 from werkzeug.utils import secure_filename
 
 app = flask.Flask(__name__)
 CORS(app)
 
-
-cred = credentials.Certificate("../../credentials/fitfinder.json")
+cred = credentials.Certificate("FitFinder-905180b5f6de.json")
 
 firebase_app = firebase_admin.initialize_app(cred)
 
@@ -136,12 +133,11 @@ def productSearch():
         file_blob.download_to_filename("static/react/imgs/" + result)
     return response
 
+
 @app.route('/trendingUpdate', methods=('GET', 'POST'))
 def trendingUpdate():
-
-
-    data = read.collection(u'Brands').document(u'H&M').collection(u'Products').where(u'likes',u'>',0).order_by(
-    u'likes', direction=firestore.Query.DESCENDING).limit(10).stream()
+    data = read.collection(u'Brands').document(u'H&M').collection(u'Products').where(u'likes', u'>', 0).order_by(
+        u'likes', direction=firestore.Query.DESCENDING).limit(10).stream()
 
     try:
 
@@ -149,17 +145,17 @@ def trendingUpdate():
         for doc in data:
             dict = doc.to_dict()
             prodInf = {
-                'img' : dict['Image'],
-                'name' :  dict['Name'],
-                'link' : dict['Link'],
-                'price' : dict['Price'],
-                'likes' : dict['likes']
+                'img': dict['Image'],
+                'name': dict['Name'],
+                'link': dict['Link'],
+                'price': dict['Price'],
+                'likes': dict['likes']
             }
-            #prodInf['key'] = doc.id
-            array[doc.id]= prodInf
-            
+            # prodInf['key'] = doc.id
+            array[doc.id] = prodInf
+
         app.config["JSON_SORT_KEYS"] = False
-        response = flask.jsonify({'products' : array})
+        response = flask.jsonify({'products': array})
         app.config["JSON_SORT_KEYS"] = True
         return response
     except google.cloud.exceptions.NotFound:
@@ -167,13 +163,12 @@ def trendingUpdate():
         return "trendingUpdate failed"
 
 
-
-
-@app.route('/addLike', methods=('GET','POST'))
+@app.route('/addLike', methods=('GET', 'POST'))
 def addLike():
     global read
     key = request.args['key']
-    read.collection(u'Brands').document(u'H&M').collection(u'Products').document(key).update({"likes": firestore.Increment(1)})
+    read.collection(u'Brands').document(u'H&M').collection(u'Products').document(key).update(
+        {"likes": firestore.Increment(1)})
     return 'Sucessful'
 
 

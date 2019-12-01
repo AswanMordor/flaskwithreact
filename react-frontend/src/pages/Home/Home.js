@@ -10,7 +10,7 @@ import image2 from "../../products/white blouse.jpeg";
 import image3 from "../../products/sweatpants.jpeg";
 import image4 from "../../products/knit_dress.jpeg";
 
-const backendUrl = "http://127.0.0.1:5000/"
+const backendUrl = "https://fitfinderstatic.appspot.com/"
 class Home extends Component {
 
   constructor(props) {
@@ -190,7 +190,7 @@ class Home extends Component {
               <button type="button" className="btn btn-outline-dark" onClick={this.uploadClick.bind(this)} hidden>Upload
               </button>
               <button type="button" className="btn btn-outline-dark" onClick={this.tempGet.bind(this)} hidden>SEND GET
-                  REQUEST --!!HOME!!--
+                  REQUEST
               </button>
               <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)} hidden>SEND POST
                   REQUEST
