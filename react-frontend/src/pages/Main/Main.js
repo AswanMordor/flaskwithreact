@@ -34,7 +34,7 @@ class Main extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
-        if(!this.props.location["pathname"].includes("trending")){
+        if(!(this.props.location["pathname"].includes("trending") || this.props.location["pathname"].includes("filter"))){
             this.props.history.push("/home");
             console.log("Pushing to home");
         }

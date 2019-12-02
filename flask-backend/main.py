@@ -157,6 +157,7 @@ def productSearch():
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
+    
     #return flask.jsonify({'results': 'POST REQUEST RECEIVED FROM SERVERRRrrrr'})
     return response
 
@@ -197,6 +198,53 @@ def addLike():
     read.collection(u'Brands').document(u'H&M').collection(u'Products').document(key).update(
         {"likes": firestore.Increment(1)})
     return 'Sucessful'
+
+@app.route('/filter', methods=('GET', 'POST'))
+def filter():
+    print("Filter page hit")
+    sort = request.args['sort'] == 0
+    try:
+        brands = int(request.args['brands'])
+        page = int(request.args['page'])
+    except:
+        return "invalid request params"
+
+    if(brands == -1 or brands == 0 or brands == 2):
+        if(sort):
+            data = read.collection(u'Brands').document(u'H&M').collection(u'Products').order_by(
+                u'Price', direction=firestore.Query.INCREASING).limit(10).stream()
+
+        else:
+            data = read.collection(u'Brands').document(u'H&M').collection(u'Products').order_by(
+                u'Price').limit(10).stream()
+
+        try:
+
+            array = {}
+            for doc in data:
+                dict = doc.to_dict()
+                prodInf = {
+                    'img': dict['Image'],
+                    'name': dict['Name'],
+                    'link': dict['Link'],
+                    'price': dict['Price'],
+                    'description': dict['Name'] #TODO change database to have a description
+                }
+                # prodInf['key'] = doc.id
+                array[doc.id] = prodInf
+
+            app.config["JSON_SORT_KEYS"] = False
+            response = flask.jsonify({'products': array})
+            app.config["JSON_SORT_KEYS"] = True
+            return response
+        except google.cloud.exceptions.NotFound:
+            print("trendingUpdate failed")
+            return "trendingUpdate failed"
+
+    else:
+        return 'no other brands exist yet'
+
+
 
 
 if __name__ == '__main__':

@@ -10,6 +10,9 @@ import image3 from "../../products/sweatpants.jpeg";
 import image4 from "../../products/knit_dress.jpeg";
 
 const backendUrl = "https://fitfinderstatic.appspot.com/"
+
+let items;
+
 class Home extends Component {
 
   constructor(props) {
@@ -20,8 +23,29 @@ class Home extends Component {
         results: [],
         item_cards: [],
     };
-
+    items = new Array();
+    this.search = this.search.bind(this);
     // this.imageClicked = this.imageClicked.bind(this);
+  }
+
+  array_chunk(arr, size) {
+
+    var result = [];
+    var slice = Array(size);
+    var count =1;
+
+    for (let elem in arr) {
+        slice.push(elem);
+
+        count++;
+        if(count%(size+1) == 0){
+
+           result.push(slice);
+           slice = Array(size);
+        }
+    }
+    result.push(slice);
+    return result;
   }
 
   cardSelect(cardId){
@@ -88,38 +112,32 @@ class Home extends Component {
     }
   }
 
+  search() {
+      fetch("http://127.0.0.1:5000/filter?sort=0&brands=0&page=0")
+      .then((response) => response.json())
+      .then((jsonData) => {
+          // jsonData is parsed json object received from url
+          console.log('data parsed')
+          console.log(jsonData)
+          items = jsonData.products;
+          this.setState({name : "Updated"});
+      })
+      .catch((error) => {
+          console.log("api request error")
+          // handle your errors here
+          console.error(error)
+          return;
+      });
+  }
+
   render() {
+    const rows = this.array_chunk(items,5);
     return (
       <div id="home">
         <ButtonToolBar class="btn_bar">
           <DropdownButton class="dropdown" title="Sort by" variant="secondary">
             <DropdownItem as="button">Price: Low to High</DropdownItem>
             <DropdownItem as="button">Price: High to Low</DropdownItem>
-          </DropdownButton>
-          <DropdownButton class="dropdown" title="Sizes" variant="secondary">
-            {/* <DropdownItem>XS</DropdownItem> */}
-            <div class="input-group-append">
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">XS</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">S</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">M</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">L</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">XL, XXL</label>
-              </div>
-            </div>
           </DropdownButton>
           <DropdownButton class="dropdown" title="Brands" variant="secondary">
           <div class="input-group-append">
@@ -133,10 +151,11 @@ class Home extends Component {
               </div>
             </div>
           </DropdownButton>
+          <Button onClick={this.search}>Search</Button>
         </ButtonToolBar>
         <hr />
           {/* <Items card={this.state.cards} /> */}
-        
+
         <div class="inputGroup">
           <input id="uploadImg" type="file" onChange={this.fileUploadHandler} hidden/>
               <Button type="button" variant="secondary" onClick={this.uploadClick.bind(this)}>Upload
@@ -145,57 +164,30 @@ class Home extends Component {
 
         <br />
         <Container>
-          <Row>
-            <Col>
-              <Card style={{ width: '13rem' }}>
-                <Card.Img variant="top" src="https://storage.googleapis.com/fitfinder-3e49c.appspot.com/Cotton_Cargo_Shorts" />
-                <Card.Body>
-                  <Card.Title>Black Dress</Card.Title>
-                  <Card.Text>
-                    Long, black dress
-                  </Card.Text>
-                  <p>$15.99</p>
-                </Card.Body>
-              </Card>
-          </Col>
-          
-          <Col>
-              <Card style={{ width: '13rem' }}>
-                <Card.Img variant="top" src={image2} />
-                <Card.Body>
-                  <Card.Title>White Blouse</Card.Title>
-                  <Card.Text>
-                    Silky, white blouse
-                  </Card.Text>
-                  <p>$15.99</p>
-                </Card.Body>
-              </Card>
-          </Col>
-          <Col>
-          <Card style={{ width: '13rem' }}>
-              <Card.Img variant="top" src={image3} />
-                <Card.Body>
-                  <Card.Title>Sweatpants</Card.Title>
-                  <Card.Text>
-                    Gray, elastic sweatpants
-                  </Card.Text>
-                  <p>$17.99</p>
-                </Card.Body>
-              </Card>
-          </Col>
-          <Col>
-          <Card style={{ width: '13rem' }}>
-            <Card.Img variant="top" src={image4} />
-              <Card.Body>
-                <Card.Title>Brown knit dress</Card.Title>
-                <Card.Text>
-                  Knee-cap length dress 
-                </Card.Text>
-                <p>$15.99</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          </Row>
+            {
+                !(items == undefined || items.length == 0 ) &&
+                    rows.map((row) => (
+                        <Row>
+                        {
+                            row.map((col) => (
+                                <Col>
+                                <Card style={{ width: '13rem' }}>
+                                  <Card.Img variant="top" src={"//"+items[col].img} />
+                                  <Card.Body>
+                                    <Card.Title>{items[col].name}</Card.Title>
+                                    <Card.Text>
+                                    <p>{items[col].description}</p>
+                                    </Card.Text>
+                                    <p>{items[col].price}</p>
+                                  </Card.Body>
+                                </Card>
+                                </Col>
+                            ))
+                        }
+                        </Row>
+                    ))
+
+            }
         </Container>
           <div className="upload">
               <input id="uploadImg" type="file" onChange={this.fileUploadHandler} hidden/>
