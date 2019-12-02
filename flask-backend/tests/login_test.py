@@ -1,5 +1,6 @@
 from selenium import webdriver
 import pytest
+import time
 
 
 def test_logintest():
@@ -14,7 +15,7 @@ def test_logintest():
     password_field.send_keys("tesuto")
     login_button = driver.find_element_by_id("login-button")
     login_button.click()
-    # possible bad failure point
-    assert driver.find_element_by_id("home") != 0
+    time.sleep(5)
+    assert driver.current_url == "https://fitfinderstatic.appspot.com/home"
     driver.close()
     print("Login test: SUCCESS")
