@@ -1,9 +1,9 @@
-from selenium import webdriver
-import pytest
 import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
-def test_logintest():
+def test_trendingtest():
     driver = webdriver.Chrome()
     driver.get(url="https://fitfinderstatic.appspot.com/")
     enter_button = driver.find_element_by_id("enter-button")
@@ -17,5 +17,10 @@ def test_logintest():
     login_button.click()
     time.sleep(2)
     assert driver.current_url == "https://fitfinderstatic.appspot.com/home"
+    trending_navitem = driver.find_element_by_xpath("//a[contains(., 'Trending')]")
+    trending_navitem.click()
+    time.sleep(5)
+    assert driver.current_url == "https://fitfinderstatic.appspot.com/trending"
     driver.close()
-    print("Login test: SUCCESS")
+    print("Trending test: SUCCESS")
+

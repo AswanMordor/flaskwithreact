@@ -22,7 +22,7 @@ def test_jointest():
     password_field.send_keys(password)
     join_page_button = driver.find_element_by_id("join-button")
     join_page_button.click()
-    time.sleep(5)
+    time.sleep(2)
     assert driver.current_url == "https://fitfinderstatic.appspot.com/home"
     driver.close()
     print("Join test: SUCCESS")
