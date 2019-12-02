@@ -4,7 +4,6 @@ import { DropdownButton, DropdownItem, Card, CardImg, Container, Row, Col, Butto
 import ButtonToolBar from "react-bootstrap/ButtonToolbar";
 import Items from "./Items";
 import { CARDS } from "./cards";
-
 import image1 from "../../products/dress.jpeg";
 import image2 from "../../products/white blouse.jpeg";
 import image3 from "../../products/sweatpants.jpeg";
@@ -18,6 +17,8 @@ class Home extends Component {
     this.state = {
       cards: CARDS,
       selectedCard: null,
+        results: [],
+        item_cards: [],
     };
 
     // this.imageClicked = this.imageClicked.bind(this);
@@ -48,6 +49,7 @@ class Home extends Component {
     }).then(response => response.json().then(jresponse => {
       console.log(jresponse)
       this.setState({requestText: jresponse.res})
+
     })).catch(() => {
       console.log("ERROR")
     })
@@ -71,10 +73,20 @@ class Home extends Component {
       body: data
     }).then(response => response.json().then(jresponse => {
       this.setState({requestText: jresponse.results.toString()})
+        this.setState({results: jresponse.results})
+        this.createCards()
     })).catch(() => {
       console.log("ERROR")
     })
   };
+
+  createCards() {
+      let results = this.state.requestText.split(",")
+
+    for (let result in results){
+        console.log("results are: " + result)
+    }
+  }
 
   render() {
     return (
