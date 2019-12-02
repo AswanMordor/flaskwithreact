@@ -67,37 +67,69 @@ def tempCom():
 
 @app.route('/productSearch', methods=('GET', 'POST'))
 def productSearch():
+    print("sdfggg")
     bucket_name = "fitfinder-3e49c.appspot.com"
     imageName = str(uuid.uuid4())
     print(imageName)
     file = request.files['file']
     filename = secure_filename(file.filename)
+    # filename = request.files['filename']
+    # print(filename)
     storage_client = storage.Client.from_service_account_json(
         str(Path("FitFinder-905180b5f6de.json").absolute()))
+
     bucket = storage_client.get_bucket(bucket_name)
-    filepath, file_extension = os.path.splitext("./" + filename)
-    blob = bucket.blob(imageName + file_extension)
+    filepath, file_extension = os.path.splitext("/tmp/" + filename)
+    blob = bucket.blob(imageName+file_extension)
     response = flask.jsonify({"res": "DONE"})
     response.headers.add('Access-Control-Allow-Origin', '*')
 
-    file.save("./" + filename)
-    os.rename("./" + filename, "./" + imageName + file_extension)
+    file.save("/tmp/"+filename)
+    os.rename("/tmp/"+filename, "/tmp/"+imageName+file_extension)
+    #with open(filename, "wb") as outfile:
+    #   outfile.write(request.data)
+    #with open(filename, "rb") as my_file:
+    #   blob.upload_from_file(my_file)
+    blob.upload_from_filename("/tmp/"+imageName+file_extension)
+    #blob.upload_from_file(file)
+    print("/tmp/" + imageName + file_extension)
+    #os.remove("./"+imageName)
 
-    blob.upload_from_filename("./" + imageName + file_extension)
-    print("./" + imageName + file_extension)
+   # authToken = "Bearer " + subprocess.run(['gcloud beta auth application-default print-access-token'], check=True,
+                                           #stdout=subprocess.PIPE,
+                                           #universal_newlines=True,
+                                           #shell=True).stdout
+   # authToken = authToken.replace("\n", "")
+    os.remove("/tmp/"+imageName+file_extension)
 
-    os.remove("./" + imageName + file_extension)
+    #os.remove(filename)
 
-    headers = {
+    # import google.auth.transport.requests
+    # creds, projects = google.auth.default()
+
+    # # creds.valid is False, and creds.token is None
+    # Need to refresh credentials to populate those
+
+    # auth_req = google.auth.transport.requests.Request()
+    # creds.refresh(auth_req)
+
+    # Now you can use creds.token
+    # authToken = str(creds.token)
+    # authToken = authToken.replace("\n", "")
+    # print(authToken)
+
+    headers = {  # TODO: get auth token dynamically
         "Content-Type": "application/json"
     }
     print("got to payload definition")
+    #HARDCODED png below that works, replace ${image.name} (which is the name of the image lol) with + filename for actual use
+    #When the firebase upload is finished
     payload = {
         "requests": [
             {
                 "image": {
                     "source": {
-                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/" + imageName + file_extension
+                        "gcsImageUri": "gs://fitfinder-3e49c.appspot.com/"+imageName+file_extension
                     }
                 },
                 "features": [
@@ -125,12 +157,7 @@ def productSearch():
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
-
-    os.mkdir("static/react/imgs/")
-    for result in results:
-        print("Attempting to save: ", result)
-        file_blob = bucket.blob(result)
-        file_blob.download_to_filename("static/react/imgs/" + result)
+    #return flask.jsonify({'results': 'POST REQUEST RECEIVED FROM SERVERRRrrrr'})
     return response
 
 

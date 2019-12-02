@@ -136,7 +136,7 @@ class Home extends Component {
           <Row>
             <Col>
               <Card style={{ width: '13rem' }}>
-                <Card.Img variant="top" src={image1} />
+                <Card.Img variant="top" src="https://storage.googleapis.com/fitfinder-3e49c.appspot.com/Cotton_Cargo_Shorts" />
                 <Card.Body>
                   <Card.Title>Black Dress</Card.Title>
                   <Card.Text>
@@ -195,7 +195,7 @@ class Home extends Component {
               <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)} hidden>SEND POST
                   REQUEST
               </button>
-              <button type="button" className="btn btn-outline-dark" hidden>{this.state.requestText}</button>
+              <button type="button" className="btn btn-outline-dark" >{this.state.requestText}</button>
               {/* <img src={require(this.state.selectedFile)} /> */}
           </div>
       </div>
