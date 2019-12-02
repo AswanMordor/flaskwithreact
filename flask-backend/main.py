@@ -67,7 +67,7 @@ def tempCom():
 
 @app.route('/productSearch', methods=('GET', 'POST'))
 def productSearch():
-    print("sdfggg")
+    app.config["JSON_SORT_KEYS"] = False
     bucket_name = "fitfinder-3e49c.appspot.com"
     imageName = str(uuid.uuid4())
     print(imageName)
@@ -157,9 +157,37 @@ def productSearch():
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
-    
-    #return flask.jsonify({'results': 'POST REQUEST RECEIVED FROM SERVERRRrrrr'})
+
+    array = {}
+    for name in results:
+        data = read.collection(u'Brands').document(u'H&M').collection(u'Products').where(u'Name', u'==', name.replace("_"," ")).limit(1).stream()
+
+        try:
+            for doc in data:
+                dict = doc.to_dict()
+                prodInf = {
+                    'img': dict['Image'],
+                    'name': dict['Name'],
+                    'link': dict['Link'],
+                    'price': dict['Price'],
+                    'description': dict['Name']
+                }
+                # prodInf['key'] = doc.id
+                array[doc.id] = prodInf
+
+
+        except google.cloud.exceptions.NotFound:
+            print("upload failed")
+            return "upload failed"
+
+    app.config["JSON_SORT_KEYS"] = False
+    response = flask.jsonify({'products': array})
+    print(response)
+    app.config["JSON_SORT_KEYS"] = True
     return response
+
+    #return flask.jsonify({'results': 'POST REQUEST RECEIVED FROM SERVERRRrrrr'})
+
 
 
 @app.route('/trendingUpdate', methods=('GET', 'POST'))

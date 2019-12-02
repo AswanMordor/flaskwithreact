@@ -9,7 +9,7 @@ import image2 from "../../products/white blouse.jpeg";
 import image3 from "../../products/sweatpants.jpeg";
 import image4 from "../../products/knit_dress.jpeg";
 
-const backendUrl = "https://fitfinderstatic.appspot.com/"
+const backendUrl = "http://127.0.0.1:5000/"
 
 let items;
 
@@ -96,11 +96,13 @@ class Home extends Component {
       method: 'POST',
       body: data
     }).then(response => response.json().then(jresponse => {
-      this.setState({requestText: jresponse.results.toString()})
-        this.setState({results: jresponse.results})
+        items = jresponse.products
+      this.setState({requestText: jresponse.products.toString()})
+        this.setState({results: jresponse.products})
         this.createCards()
-    })).catch(() => {
+    })).catch((error) => {
       console.log("ERROR")
+      console.error(error)
     })
   };
 
@@ -110,10 +112,11 @@ class Home extends Component {
     for (let result in results){
         console.log("results are: " + result)
     }
+
   }
 
   search() {
-      fetch("http://127.0.0.1:5000/filter?sort=0&brands=0&page=0")
+      fetch(backendUrl+"filter?sort=0&brands=0&page=0")
       .then((response) => response.json())
       .then((jsonData) => {
           // jsonData is parsed json object received from url
@@ -199,7 +202,7 @@ class Home extends Component {
               <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)} hidden>SEND POST
                   REQUEST
               </button>
-              <button type="button" className="btn btn-outline-dark" >{this.state.requestText}</button>
+              <button type="button" className="btn btn-outline-dark"  hidden>{this.state.requestText}</button>
               {/* <img src={require(this.state.selectedFile)} /> */}
           </div>
       </div>
