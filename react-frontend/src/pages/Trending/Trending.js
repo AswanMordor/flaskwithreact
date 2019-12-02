@@ -16,6 +16,7 @@ class Trending extends Component {
 
     constructor(props){
         super(props);
+        console.log("top of constructor");
         items = new Array();
     }
 
@@ -58,7 +59,7 @@ class Trending extends Component {
                 // handle your errors here
                 console.error(error)
             });
-            return (<div id="trending"></div>);
+            return (<div id="trending">huhuhuhuhuh</div>);
         }
         else{
             const rows = this.array_chunk(items,5);

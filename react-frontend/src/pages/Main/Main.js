@@ -8,10 +8,10 @@ import {
 } from "react-router-dom";
 import Splash from "../Splash";
 import Home from "../Home";
+import Trending from "../Trending";
 import Login from "../Login";
 import Join from "../Join";
 import About from "../About";
-import Trending from "../Trending";
 import fire from "../../credentials/Fire";
 
 import "../../App.css";
@@ -63,10 +63,10 @@ class Main extends Component {
             {this.state.user ? (
               <React.Fragment>
                 <NavItem>
-                  <NavLink href="/home">Home</NavLink>
+                  <NavLink href="/trending">Trending</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/trending">Trending</NavLink>
+                  <NavLink href="/home">Home</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink href="/" onClick={this.logout}>
@@ -85,10 +85,10 @@ class Main extends Component {
         <Switch>
           <Route exact path="/" component={Splash} />
           <Route path="/home" component={Home} />
+          <Route path="/trending" component={Trending} />
           <Route path="/login" component={Login} />
           <Route path="/join" component={Join} />
           <Route path="/about" component={About} />
-          <Route path="/trending" componenet={Trending}/>
         </Switch>
       </div>
     );
