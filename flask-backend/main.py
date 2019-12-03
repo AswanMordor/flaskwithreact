@@ -27,16 +27,26 @@ firebase_app = firebase_admin.initialize_app(cred)
 
 read = firestore.client()
 
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        # else:
+        #     cls._instances[cls].__init__(*args, **kwargs)
+        return cls._instances[cls]
+
+class StorageClient(metaclass=Singleton):
+    sc = storage.Client.from_service_account_json(str(Path("FitFinder-905180b5f6de.json").absolute()))
 
 def explicit():
     from google.cloud import storage
     # Explicitly use service account credentials by specifying the private key
     # file.
-    storage_client = storage.Client.from_service_account_json(
-        str(Path("FitFinder-905180b5f6de.json").absolute()))
+    storage_client = StorageClient()
 
     # Make an authenticated API request
-    buckets = list(storage_client.list_buckets())
+    buckets = list(storage_client.sc.list_buckets())
     print(buckets)
 
 
@@ -67,7 +77,7 @@ def tempCom():
 
 @app.route('/productSearch', methods=('GET', 'POST'))
 def productSearch():
-    print("sdfggg")
+    app.config["JSON_SORT_KEYS"] = False
     bucket_name = "fitfinder-3e49c.appspot.com"
     imageName = str(uuid.uuid4())
     print(imageName)
@@ -75,10 +85,9 @@ def productSearch():
     filename = secure_filename(file.filename)
     # filename = request.files['filename']
     # print(filename)
-    storage_client = storage.Client.from_service_account_json(
-        str(Path("FitFinder-905180b5f6de.json").absolute()))
+    storage_client = StorageClient()
 
-    bucket = storage_client.get_bucket(bucket_name)
+    bucket = storage_client.sc.get_bucket(bucket_name)
     filepath, file_extension = os.path.splitext("/tmp/" + filename)
     blob = bucket.blob(imageName+file_extension)
     response = flask.jsonify({"res": "DONE"})
@@ -157,8 +166,37 @@ def productSearch():
     results = [i["product"]["name"].split("/")[-1] for i in
                gcsResponse.json()["responses"][0]["productSearchResults"]["results"]]  # parse names from gscResponse
     response = flask.jsonify({"results": results})
-    #return flask.jsonify({'results': 'POST REQUEST RECEIVED FROM SERVERRRrrrr'})
+
+    array = {}
+    for name in results:
+        data = read.collection(u'Brands').document(u'H&M').collection(u'Products').where(u'Name', u'==', name.replace("_"," ")).limit(1).stream()
+
+        try:
+            for doc in data:
+                dict = doc.to_dict()
+                prodInf = {
+                    'img': dict['Image'],
+                    'name': dict['Name'],
+                    'link': dict['Link'],
+                    'price': dict['Price'],
+                    'description': dict['Name']
+                }
+                # prodInf['key'] = doc.id
+                array[doc.id] = prodInf
+
+
+        except google.cloud.exceptions.NotFound:
+            print("upload failed")
+            return "upload failed"
+
+    app.config["JSON_SORT_KEYS"] = False
+    response = flask.jsonify({'products': array})
+    print(response)
+    app.config["JSON_SORT_KEYS"] = True
     return response
+
+    #return flask.jsonify({'results': 'POST REQUEST RECEIVED FROM SERVERRRrrrr'})
+
 
 
 @app.route('/trendingUpdate', methods=('GET', 'POST'))
@@ -197,6 +235,53 @@ def addLike():
     read.collection(u'Brands').document(u'H&M').collection(u'Products').document(key).update(
         {"likes": firestore.Increment(1)})
     return 'Sucessful'
+
+@app.route('/filter', methods=('GET', 'POST'))
+def filter():
+    print("Filter page hit")
+    sort = request.args['sort'] == 0
+    try:
+        brands = int(request.args['brands'])
+        page = int(request.args['page'])
+    except:
+        return "invalid request params"
+
+    if(brands == -1 or brands == 0 or brands == 2):
+        if(sort):
+            data = read.collection(u'Brands').document(u'H&M').collection(u'Products').order_by(
+                u'Price', direction=firestore.Query.INCREASING).limit(10).stream()
+
+        else:
+            data = read.collection(u'Brands').document(u'H&M').collection(u'Products').order_by(
+                u'Price').limit(10).stream()
+
+        try:
+
+            array = {}
+            for doc in data:
+                dict = doc.to_dict()
+                prodInf = {
+                    'img': dict['Image'],
+                    'name': dict['Name'],
+                    'link': dict['Link'],
+                    'price': dict['Price'],
+                    'description': dict['Name'] #TODO change database to have a description
+                }
+                # prodInf['key'] = doc.id
+                array[doc.id] = prodInf
+
+            app.config["JSON_SORT_KEYS"] = False
+            response = flask.jsonify({'products': array})
+            app.config["JSON_SORT_KEYS"] = True
+            return response
+        except google.cloud.exceptions.NotFound:
+            print("trendingUpdate failed")
+            return "trendingUpdate failed"
+
+    else:
+        return 'no other brands exist yet'
+
+
 
 
 if __name__ == '__main__':

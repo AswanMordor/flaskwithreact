@@ -21,9 +21,9 @@ def run_server():
                                  universal_newlines=True,
                                  shell=True)
     print(python_main)
-    browser_thread = threading.Thread(target=open_browser, args=())
-    browser_thread.setDaemon(True)
-    browser_thread.start()
+    #browser_thread = threading.Thread(target=open_browser, args=())
+    #browser_thread.setDaemon(True)
+    #browser_thread.start()
 
 
 def open_browser():

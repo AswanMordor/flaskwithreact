@@ -11,6 +11,7 @@ import Home from "../Home";
 import Trending from "../Trending";
 import Login from "../Login";
 import Join from "../Join";
+import About from "../About";
 import fire from "../../credentials/Fire";
 
 import "../../App.css";
@@ -34,11 +35,14 @@ class Main extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
-        if (!this.props.location["pathname"].includes("trending")) {
-          this.props.history.push("/home");
-          console.log("Pushing to home");
-        } else {
-          console.log("staying on trending");
+
+        if(!(this.props.location["pathname"].includes("trending") || this.props.location["pathname"].includes("filter"))){
+            this.props.history.push("/home");
+            console.log("Pushing to home");
+        }
+        else{
+            console.log("staying on trending");
+
         }
       } else {
         this.setState({ user: null });
@@ -74,7 +78,7 @@ class Main extends Component {
               </React.Fragment>
             ) : (
               <NavItem>
-                <NavLink href="">About</NavLink>
+                <NavLink href="/about">About</NavLink>
               </NavItem>
             )}
           </Nav>
@@ -86,6 +90,7 @@ class Main extends Component {
           {/* <Route path="/trending" component={Trending} /> */}
           <Route path="/login" component={Login} />
           <Route path="/join" component={Join} />
+          <Route path="/about" component={About} />
         </Switch>
       </div>
     );

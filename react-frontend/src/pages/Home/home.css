@@ -1,0 +1,25 @@
+/* body{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.inputGroup{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_bar{
+    /* justify-content: center; */
+    flex-direction: column;
+    flex: 1;
+}
+
+.dropdown {
+    /* justify-content: center; */
+    align-items: center;
+    margin: 5px;
+}
