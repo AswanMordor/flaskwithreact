@@ -1,5 +1,6 @@
 {
   "files": {
+
     "main.css": "/static/react/css/main.805a14f5.chunk.css",
     "main.js": "/static/react/js/main.3805c10f.chunk.js",
     "main.js.map": "/static/react/js/main.3805c10f.chunk.js.map",
@@ -13,6 +14,7 @@
     "css/main.805a14f5.chunk.css.map": "/static/react/css/main.805a14f5.chunk.css.map",
     "media/andy.png": "/static/react/media/andy.4265f871.png",
     "media/anna.png": "/static/react/media/anna.6294695d.png",
+
     "media/dress.jpeg": "/static/react/media/dress.f90b697f.jpeg",
     "media/eric.png": "/static/react/media/eric.0a232d1b.png",
     "media/knit_dress.jpeg": "/static/react/media/knit_dress.fc7ca43d.jpeg",
@@ -21,6 +23,7 @@
     "media/sweatpants.jpeg": "/static/react/media/sweatpants.4ab44e25.jpeg",
     "media/usman.png": "/static/react/media/usman.5a4de8a6.png",
     "media/white blouse.jpeg": "/static/react/media/white blouse.1caa55de.jpeg",
+
     "precache-manifest.65616549e1fda34e081ee66baf4add7b.js": "/static/react/precache-manifest.65616549e1fda34e081ee66baf4add7b.js",
     "service-worker.js": "/static/react/service-worker.js"
   },
@@ -30,5 +33,6 @@
     "js/2.800860f7.chunk.js",
     "css/main.805a14f5.chunk.css",
     "js/main.3805c10f.chunk.js"
+
   ]
 }
