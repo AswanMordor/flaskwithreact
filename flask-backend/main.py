@@ -239,7 +239,7 @@ def addLike():
 @app.route('/filter', methods=('GET', 'POST'))
 def filter():
     print("Filter page hit")
-    sort = request.args['sort'] == 0
+    sort = request.args['sort'] == '0'
     try:
         brands = int(request.args['brands'])
         page = int(request.args['page'])
@@ -249,11 +249,11 @@ def filter():
     if(brands == -1 or brands == 0 or brands == 2):
         if(sort):
             data = read.collection(u'Brands').document(u'H&M').collection(u'Products').order_by(
-                u'Price', direction=firestore.Query.INCREASING).limit(10).stream()
+                u'Price').limit(10).stream()
 
         else:
             data = read.collection(u'Brands').document(u'H&M').collection(u'Products').order_by(
-                u'Price').limit(10).stream()
+                u'Price', direction=firestore.Query.DESCENDING).limit(10).stream()
 
         try:
 

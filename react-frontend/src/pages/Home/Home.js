@@ -15,6 +15,8 @@ const backendUrl = "http://127.0.0.1:5000/"
 
 let items;
 
+let sort;
+
 class Home extends Component {
 
   constructor(props) {
@@ -27,7 +29,21 @@ class Home extends Component {
     };
     items = new Array();
     this.search = this.search.bind(this);
+    this.like = this.like.bind(this);
+    this.lowToHigh = this.lowToHigh.bind(this);
+    this.highToLow = this.highToLow.bind(this);
     // this.imageClicked = this.imageClicked.bind(this);
+    this.sort = 0;
+  }
+
+  like(key){
+      fetch(backendUrl+"addLike?key="+key)
+      .catch((error) => {
+          console.log("like request error")
+          // handle your errors here
+          console.error(error)
+          return;
+      });
   }
 
   array_chunk(arr, size) {
@@ -48,6 +64,15 @@ class Home extends Component {
     }
     result.push(slice);
     return result;
+  }
+
+  lowToHigh(){
+      this.sort = 0;
+  }
+  highToLow(){
+      this.sort = 1;
+      console.log(this.sort);
+      console.log("highToLow");
   }
 
   cardSelect(cardId){
@@ -118,7 +143,7 @@ class Home extends Component {
   }
 
   search() {
-      fetch(backendUrl+"filter?sort=0&brands=0&page=0")
+      fetch(backendUrl+"filter?sort="+this.sort+"&brands=0&page=0")
       .then((response) => response.json())
       .then((jsonData) => {
           // jsonData is parsed json object received from url
@@ -141,8 +166,8 @@ class Home extends Component {
       <div id="home">
         <ButtonToolBar class="btn_bar">
           <DropdownButton className="dropdown" title="Sort by" variant="secondary" style={{marginLeft: '10px'}}>
-            <DropdownItem as="button">Price: Low to High</DropdownItem>
-            <DropdownItem as="button">Price: High to Low</DropdownItem>
+            <DropdownItem as="button" onClick={this.lowToHigh}>Price: Low to High</DropdownItem>
+            <DropdownItem as="button" onClick={this.highToLow}>Price: High to Low</DropdownItem>
           </DropdownButton>
           <DropdownButton class="dropdown" title="Brands" variant="secondary">
           <div class="input-group-append">
@@ -184,6 +209,7 @@ class Home extends Component {
                                     <p>{items[col].description}</p>
                                     </Card.Text>
                                     <p>${items[col].price}</p>
+                                    <Button onClick={() => {this.like(col)}}>Like</Button>
                                   </Card.Body>
                                 </Card>
                                 </Col>
