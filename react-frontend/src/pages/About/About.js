@@ -35,24 +35,24 @@ const contributorInfo = {
     image: Andy,
     username: "andyprevalsky",
     major: "Electrical & Computer Eng.",
-    bio: "bio",
-    responsibilities: "responsibility"
+    bio: "Andy is a third year Electrical & Computer Engineering student. Andy enjoys working on personal projects especially at hackathons.",
+    responsibilities: "Backend: Google Vision and Scraper"
   },
   EricLuoF: {
     name: "Eric Luo",
     image: Eric,
     username: "EricLuoF",
     major: "Electrical & Computer Eng.",
-    bio: "bio",
-    responsibilities: "responsibility"
+    bio: "Eric is a fourth year Electrical & Computer Engineering student.",
+    responsibilities: "Tests"
   },
   AswanMordor: {
     name: "Neel Drain",
     image: Neel,
     username: "AswanMordor",
     major: "Electrical & Computer Eng.",
-    bio: "bio",
-    responsibilities: "responsibility"
+    bio: "Neel is a fourth year Electrical & Computer Engineering student.",
+    responsibilities: "Deployment and Tests"
   },
   "sam-jwang": {
     name: "Sam Wang",
@@ -68,8 +68,8 @@ const contributorInfo = {
     username: "usmanhf",
     image: Usman,
     major: "Electrical & Computer Eng.",
-    bio: "bio",
-    responsibilities: "responsibility"
+    bio: "Usman is a 3rd year computer engineering student at UT. Usman plans to become a software engineer after graduating. Usman enjoys working on creative projects, and his hobbies include drawing, painting, and playing video games with his freinds.",
+    responsibilities: "Full-Stack"
   }
 };
 
@@ -315,44 +315,36 @@ class About extends Component {
               <ListGroupItemHeading>Data Sources:</ListGroupItemHeading>
               <ListGroupItemText>
                 Data was scraped using our own scraper written in Python that
-                parses through the CSV files holding our data, equating about
-                30,000 lines of information.
+                crawled through our datasources and parsed the data we needed
+                into TSV files.
               </ListGroupItemText>
               <ListGroupItemText tag="li">
-                <a href="https://www.bls.gov/oes/tables.htm">BLS OES Data</a>
-              </ListGroupItemText>
-              <ListGroupItemText tag="li">
-                <a href="https://www.bls.gov/ooh/">US Occupational Data</a>-
-                Left column of this page contains each major industry category.
-                Clicking on the category category brings up a table with a
-                description for each occupation in that industry
-              </ListGroupItemText>
-              <ListGroupItemText tag="li">
-                <a href="https://simplemaps.com/data/us-cities">
-                  US Census Cities Data
-                </a>
-                - Provides info, such as population, for each US city
+                <a href="https://www2.hm.com/en_us/index.html">H&M</a>
               </ListGroupItemText>
             </ListGroupItem>
             <ListGroupItem>
               <ListGroupItemHeading>Tools:</ListGroupItemHeading>
               <ListGroupItemText tag="li">
-                Google App Engine (GCP): Used to set up our PostgreSQL database
+                Google App Engine (GCP): Used to host our site
               </ListGroupItemText>
               <ListGroupItemText tag="li">
-                PyCharm: Python IDE used to write and develop data scraper
+                Flask: Used to quickly deploy and serve our site
               </ListGroupItemText>
               <ListGroupItemText tag="li">
                 Postman: Used to design our RESTful API and to test HTTP GET
                 requests from GitHub API
               </ListGroupItemText>
               <ListGroupItemText tag="li">
-                PostgreSQL: Used to create our database for each of our models
-                and instances
+                Firebase: Used to host the data we scraped and serve it to our
+                Flask Backend
               </ListGroupItemText>
               <ListGroupItemText tag="li">
-                React: Used to write 14 static webpages and dynamic about page
-                to deploy to GCP
+                React: Used to write create our dynamic pages for viewing our
+                clothing data
+              </ListGroupItemText>
+              <ListGroupItemText tag="li">
+                Google Vision: Used to analyze the uploaded images and find the
+                closest match in our database
               </ListGroupItemText>
             </ListGroupItem>
           </ListGroup>
