@@ -1,0 +1,10 @@
+.trending h1 {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+    padding: 5px;
+    color: '#bd955b';
+    font-weight:'bold'
+}

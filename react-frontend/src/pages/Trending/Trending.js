@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { DropdownButton, DropdownItem, Card, Container, Row, Col, Button, InputGroup } from 'react-bootstrap';
+import { DropdownButton, DropdownItem, Card, Container, Row, Col, Button, InputGroup, Jumbotron } from 'react-bootstrap';
 // import DropdownItem from "react-bootstrap/DropdownItem";
 import ButtonToolBar from "react-bootstrap/ButtonToolbar";
 import Items from "./Items";
 
-
-
+import "./trending.css";
 
 const backendUrl = "https://fitfinderstatic.appspot.com/"
 
@@ -59,15 +58,21 @@ class Trending extends Component {
                 // handle your errors here
                 console.error(error)
             });
-            return (<div id="trending">huhuhuhuhuh</div>);
+            return (<div id="trending">Loading...</div>);
         }
         else{
-            const rows = this.array_chunk(items,5);
+            const rows = this.array_chunk(items, 4);
 
             console.log("rendering");
 
             return (
-                <div id="trending">
+                <div class='trending'>
+                    <Jumbotron style={{backgroundColor: 'transparent'}}>
+                        <Container>
+                            <h1 className="display-3" style={{fontWeight: 'bolder', color: '#bd955b'}}>TRENDING</h1>
+                        </Container>
+                    </Jumbotron>
+                    {/* style={{ justifyContent: 'center', fontStyle: 'italic', margin: '10px', color: '#bd955b', fontWeight:'bold' }} */}
                     <Container>
                     {
                         rows.map((row) => (
@@ -75,7 +80,7 @@ class Trending extends Component {
                             {
                                 row.map((col) => (
                                     <Col>
-                                    <Card style={{ width: '13rem' }}>
+                                    <Card style={{ width: '15rem', height: '35rem', margin: '5px', flexDirection: 'row', flexWrap: 'wrap' }}>
                                       <Card.Img variant="top" src={"//"+items[col].img} />
                                       <Card.Body>
                                         <Card.Title>{items[col].name}</Card.Title>

@@ -27,8 +27,8 @@ const contributorInfo = {
     image: Anna,
     username: "ahs996",
     major: "Electrical & Computer Eng.",
-    bio: "bio",
-    responsibilities: "responsibility"
+    bio: "Anna is a third year Electrical & Computer Engineering student. She plans to be a front-end developer or UI/UX Designer after graduating college.",
+    responsibilities: "Front-End"
   },
   andyprevalsky: {
     name: "Andy Prevalsky",
@@ -213,7 +213,7 @@ class About extends Component {
       <Card
         key={id}
         body
-        style={{ borderColor: "#333", cursor: "pointer" }}
+        style={{ borderColor: "##a6a6a6", cursor: "pointer", marginTop: "10px"}}
         className="text-left"
         tag="a"
         onClick={() => window.open(`https://github.com/${username}`)}
@@ -276,7 +276,7 @@ class About extends Component {
   render() {
     const { commitsTotal, issuesTotal, unitTestsTotal } = this.state;
     return (
-      <Container id="about">
+      <Container id="about" style={{ borderColor: "##a6a6a6", marginTop: "20px"}}>
         <Jumbotron fluid>
           <Container fluid>
             <h1 className="display-3">About FitFinder</h1>
@@ -295,9 +295,9 @@ class About extends Component {
             </p>
           </Container>
         </Jumbotron>
-        <h2 id="name">Team Cerulean</h2>
+        <h1 id="name">Team Cerulean</h1>
 
-        <Container>
+        <Container style={{ borderColor: "##a6a6a6", marginTop: "10px"}}>
           <ListGroup>
             <ListGroupItem>
               <ListGroupItemHeading>Team Statistics:</ListGroupItemHeading>
