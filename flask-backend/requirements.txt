@@ -1,8 +1,8 @@
-Flask==0.10
+Flask==1.0.2
 google-api-python-client
 google.cloud
 google-cloud-storage
 uuid
 requests
 flask_cors
-os
+firebase_admin

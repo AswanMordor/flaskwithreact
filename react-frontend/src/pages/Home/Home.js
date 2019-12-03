@@ -1,168 +1,214 @@
 import React, { Component } from "react";
-import { DropdownButton, DropdownItem, Card, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { DropdownButton, DropdownItem, Card, CardImg, Container, Row, Col, Button, InputGroup } from 'react-bootstrap';
 // import DropdownItem from "react-bootstrap/DropdownItem";
 import ButtonToolBar from "react-bootstrap/ButtonToolbar";
-import ItemList from "./Item";
+// import Items from "./Items";
 import { CARDS } from "./cards";
+import image1 from "../../products/dress.jpeg";
+import image2 from "../../products/white blouse.jpeg";
+import image3 from "../../products/sweatpants.jpeg";
+import image4 from "../../products/knit_dress.jpeg";
 
-import Immutable from 'immutable';
+import "./home.css";
 
-const search = {
-    justifyContent: 'right',
-    float: 'right',
-    alignContent: 'right',
-    flex: 1,
-}
+const backendUrl = "http://127.0.0.1:5000/"
+
+let items;
 
 class Home extends Component {
-  // state = {
-  //   cards: CARDS
-  // };
-  constructor(props){
-    super(props)
+
+  constructor(props) {
+    super(props);
     this.state = {
       cards: CARDS,
+      selectedCard: null,
+        results: [],
+        item_cards: [],
+    };
+    items = new Array();
+    this.search = this.search.bind(this);
+    // this.imageClicked = this.imageClicked.bind(this);
+  }
+
+  array_chunk(arr, size) {
+
+    var result = [];
+    var slice = Array(size);
+    var count =1;
+
+    for (let elem in arr) {
+        slice.push(elem);
+
+        count++;
+        if(count%(size+1) == 0){
+
+           result.push(slice);
+           slice = Array(size);
+        }
     }
-    this.sortByAsc = this.sortByAsc.bind(this);
-    this.sortByDesc = this.sortByDesc.bind(this);
+    result.push(slice);
+    return result;
   }
 
-  // sortByAsc = () => {
-  //   this.setState(prevState => {
-  //     this.state.cards.sort((a,b) => (a.price - b.price))
-  //   });
-
-  //   console.log("sorted")
-  // }
-
-  sortByAsc = () => {
-    this.setState(prevState => ({
-      cards: prevState.cards.sort((a,b) => a.price - b.price)
-    }));
-
-    console.log("sorted")
+  cardSelect(cardId){
+    this.setState({ selectedCard: cardId });
   }
 
-  sortByDesc = () => {
-    this.setState(prevState => ({
-      cards: prevState.cards.sort((a,b) => b.price - a.price)
-    }));
-
-    console.log("sorted")
+  uploadClick() {
+    document.getElementById("uploadImg").click()
   }
 
-  handleCheckClick = (clicked_id) => {
-    const temp = this.state.cards
-    var newArray = []
-    switch(clicked_id){
-      case "hm":
-        // this.setState(prevState => ({
-        //   cards: prevState.cards.filter((a) => a.brand == clicked_id)
-        // }));
-        // Immutable.map(this.state.cards).filter(this.state.cards.brand == clicked_id)
-        newArray = temp.filter(a => a.brand != clicked_id)
-        console.log("hm")
+  tempGet() {
+    fetch(backendUrl+"temp", {
+      method: 'GET'
+    }).then(response => response.json().then(jresponse => {
+      console.log(jresponse)
+      this.setState({requestText: jresponse.res})
+    })).catch(() => {
+      console.log("ERROR")
+    })
+}
 
-      case "gucci":
-        // this.setState(prevState => ({
-        //   cards: prevState.cards.filter((a) => a.brand != clicked_id)
-        // }));
-        newArray = temp.filter(a => a.brand != clicked_id)
-      default:
-        // this.setState({
-        //   cards: CARDS
-        // });
-        newArray = CARDS
-    }
+  tempPost() {
+    fetch(backendUrl+"temp", {
+      method: 'POST'
+    }).then(response => response.json().then(jresponse => {
+      console.log(jresponse)
+      this.setState({requestText: jresponse.res})
 
-    this.setState({
-      cards: newArray
+    })).catch(() => {
+      console.log("ERROR")
     })
   }
 
-  componentDidMount() {
-    this.setState(this.state.cards)
+
+  state = {
+    selectedFile: null
+  }
+
+  fileUploadHandler = event => {
+    this.setState({
+      selectedFile: event.target.files[0]
+    })
+      const data = new FormData();
+    data.append('file', event.target.files[0]);
+    //data.append('filename', this.fileName.value);
+    //console.log(event.target.files[0])
+    fetch(backendUrl+"productSearch", {
+      method: 'POST',
+      body: data
+    }).then(response => response.json().then(jresponse => {
+        items = jresponse.products
+      this.setState({requestText: jresponse.products.toString()})
+        this.setState({results: jresponse.products})
+        this.createCards()
+    })).catch((error) => {
+      console.log("ERROR")
+      console.error(error)
+    })
+  };
+
+  createCards() {
+      let results = this.state.requestText.split(",")
+
+    for (let result in results){
+        console.log("results are: " + result)
+    }
+
+  }
+
+  search() {
+      fetch(backendUrl+"filter?sort=0&brands=0&page=0")
+      .then((response) => response.json())
+      .then((jsonData) => {
+          // jsonData is parsed json object received from url
+          console.log('data parsed')
+          console.log(jsonData)
+          items = jsonData.products;
+          this.setState({name : "Updated"});
+      })
+      .catch((error) => {
+          console.log("api request error")
+          // handle your errors here
+          console.error(error)
+          return;
+      });
   }
 
   render() {
+    const rows = this.array_chunk(items,4);
     return (
-      <div>
+      <div id="home">
         <ButtonToolBar class="btn_bar">
-          <DropdownButton class="dropdown" title="Sort by" variant="secondary">
-            <DropdownItem as="button" onClick={this.sortByAsc}>Price: Low to High</DropdownItem>
-            <DropdownItem as="button" onClick={this.sortByDesc}>Price: High to Low</DropdownItem>
-          </DropdownButton>
-          <DropdownButton class="dropdown" title="Sizes" variant="secondary">
-            {/* <DropdownItem>XS</DropdownItem> */}
-            <div class="input-group-append">
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">XS</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">S</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">M</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">L</label>
-              </div>
-              <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
-                  <label class="form-check-label ml-5" for="exampleCheck1">XL, XXL</label>
-              </div>
-            </div>
+          <DropdownButton className="dropdown" title="Sort by" variant="secondary" style={{marginLeft: '10px'}}>
+            <DropdownItem as="button">Price: Low to High</DropdownItem>
+            <DropdownItem as="button">Price: High to Low</DropdownItem>
           </DropdownButton>
           <DropdownButton class="dropdown" title="Brands" variant="secondary">
           <div class="input-group-append">
               <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="hm" onClick={ e => this.handleCheckClick(e.target.id)} />
+                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
                   <label class="form-check-label ml-5" for="checkbox">HM</label>
               </div>
               <div class="input-group-text">
-                  <input type="checkbox" class="form-check-input ml-0" id="gucci" onClick={ e => this.handleCheckClick(e.target.id)}/>
-                  <label class="form-check-label ml-5" for="checkbox">Gucci</label>
+                  <input type="checkbox" class="form-check-input ml-0" id="checkbox" />
+                  <label class="form-check-label ml-5" for="checkbox">Calvin Klein</label>
               </div>
             </div>
           </DropdownButton>
-
-          <InputGroup className="md-4" style={search}>
-            <FormControl placeholder="Search" />
-            <InputGroup.Append class="mb-4" >
-              <button class="btn btn-outline-secondary border-left-0 border" type="button">
-                    <i class="fa fa-search"></i>
-              </button>
-            </InputGroup.Append>
-          </InputGroup>
+          <Button variant="info" onClick={this.search} style={{height: '2.45rem', margin: '5px'}}>Search</Button>
         </ButtonToolBar>
         <hr />
           {/* <Items card={this.state.cards} /> */}
-        
-        {/* upload file */}
-        <div class="inputGroup">
-          <input type="file"/>
-          <Button variant="secondary">
-            Submit
-          </Button>
-        </div>
 
-        <br />
-        <div class="home">
-          <Row>
-            {this.state.cards.map(item => (
-              <Col>
-                {
-                  <ItemList key={item.id} item={item} price={item.price}/>
-                }
-                </Col>
-            ))}
-          </Row>
+        <div class="inputGroup">
+          <input id="uploadImg" type="file" onChange={this.fileUploadHandler} hidden/>
+              <Button type="button" variant="secondary" onClick={this.uploadClick.bind(this)}>Upload
+              </Button>
         </div>
+{/* style={{ justifyContent: 'center', alignItems: 'center'}}  */}
+        <br />
+        <Container>
+            {
+                !(items == undefined || items.length == 0 ) &&
+                    rows.map((row) => (
+                        <Row>
+                        {
+                            row.map((col) => (
+                                <Col>
+                                <Card style={{ width: '15rem', height: '35rem', margin: '5px', flexDirection: 'row', flexWrap: 'wrap' }}>
+                                  <Card.Img variant="top" src={"//"+items[col].img} />
+                                  <Card.Body>
+                                    <Card.Title>{items[col].name}</Card.Title>
+                                    <Card.Text>
+                                    <p>{items[col].description}</p>
+                                    </Card.Text>
+                                    <p>${items[col].price}</p>
+                                  </Card.Body>
+                                </Card>
+                                </Col>
+                            ))
+                        }
+                        </Row>
+                    ))
+
+            }
+        </Container>
+          <div className="upload">
+              <input id="uploadImg" type="file" onChange={this.fileUploadHandler} hidden/>
+              <button type="button" className="btn btn-outline-dark" onClick={this.uploadClick.bind(this)} hidden>Upload
+              </button>
+              <button type="button" className="btn btn-outline-dark" onClick={this.tempGet.bind(this)} hidden>SEND GET
+                  REQUEST
+              </button>
+              <button type="button" className="btn btn-outline-dark" onClick={this.tempPost.bind(this)} hidden>SEND POST
+                  REQUEST
+              </button>
+              <button type="button" className="btn btn-outline-dark"  hidden>{this.state.requestText}</button>
+              {/* <img src={require(this.state.selectedFile)} /> */}
+          </div>
       </div>
+
     );
   }
 }

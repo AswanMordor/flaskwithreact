@@ -5,6 +5,7 @@
   "homepage": "/static/react",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "firebase": "^7.5.0",
     "immutable": "^4.0.0-rc.12",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",

@@ -11,8 +11,6 @@
 # production
 /build
 
-# credentials
-/src/credentials
 
 # misc
 .DS_Store

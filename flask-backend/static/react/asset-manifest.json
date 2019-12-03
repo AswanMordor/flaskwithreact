@@ -1,24 +1,34 @@
 {
   "files": {
-    "main.css": "/static/react/css/main.d5603231.chunk.css",
-    "main.js": "/static/react/js/main.5ed0890d.chunk.js",
-    "main.js.map": "/static/react/js/main.5ed0890d.chunk.js.map",
+    "main.css": "/static/react/css/main.805a14f5.chunk.css",
+    "main.js": "/static/react/js/main.3805c10f.chunk.js",
+    "main.js.map": "/static/react/js/main.3805c10f.chunk.js.map",
     "runtime-main.js": "/static/react/js/runtime-main.c8857416.js",
     "runtime-main.js.map": "/static/react/js/runtime-main.c8857416.js.map",
     "css/2.b0bb7f2c.chunk.css": "/static/react/css/2.b0bb7f2c.chunk.css",
-    "js/2.3c850984.chunk.js": "/static/react/js/2.3c850984.chunk.js",
-    "js/2.3c850984.chunk.js.map": "/static/react/js/2.3c850984.chunk.js.map",
+    "js/2.800860f7.chunk.js": "/static/react/js/2.800860f7.chunk.js",
+    "js/2.800860f7.chunk.js.map": "/static/react/js/2.800860f7.chunk.js.map",
     "../../templates/index.html": "/static/react/../../templates/index.html",
     "css/2.b0bb7f2c.chunk.css.map": "/static/react/css/2.b0bb7f2c.chunk.css.map",
-    "css/main.d5603231.chunk.css.map": "/static/react/css/main.d5603231.chunk.css.map",
-    "precache-manifest.15025b44f9c8b488ca0e15d4ca326cca.js": "/static/react/precache-manifest.15025b44f9c8b488ca0e15d4ca326cca.js",
+    "css/main.805a14f5.chunk.css.map": "/static/react/css/main.805a14f5.chunk.css.map",
+    "media/andy.png": "/static/react/media/andy.4265f871.png",
+    "media/anna.png": "/static/react/media/anna.6294695d.png",
+    "media/dress.jpeg": "/static/react/media/dress.f90b697f.jpeg",
+    "media/eric.png": "/static/react/media/eric.0a232d1b.png",
+    "media/knit_dress.jpeg": "/static/react/media/knit_dress.fc7ca43d.jpeg",
+    "media/neel.png": "/static/react/media/neel.44527d68.png",
+    "media/sam.png": "/static/react/media/sam.532af86e.png",
+    "media/sweatpants.jpeg": "/static/react/media/sweatpants.4ab44e25.jpeg",
+    "media/usman.png": "/static/react/media/usman.5a4de8a6.png",
+    "media/white blouse.jpeg": "/static/react/media/white blouse.1caa55de.jpeg",
+    "precache-manifest.65616549e1fda34e081ee66baf4add7b.js": "/static/react/precache-manifest.65616549e1fda34e081ee66baf4add7b.js",
     "service-worker.js": "/static/react/service-worker.js"
   },
   "entrypoints": [
     "js/runtime-main.c8857416.js",
     "css/2.b0bb7f2c.chunk.css",
-    "js/2.3c850984.chunk.js",
-    "css/main.d5603231.chunk.css",
-    "js/main.5ed0890d.chunk.js"
+    "js/2.800860f7.chunk.js",
+    "css/main.805a14f5.chunk.css",
+    "js/main.3805c10f.chunk.js"
   ]
 }

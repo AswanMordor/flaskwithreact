@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fitfinder-3e49c",
+  "private_key_id": "6f47aeb6b98e528fca9c77f87c38f10514d6a9eb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDKL56XpnTdwrAe\n0/QW99I4AibI+yEt2qVhRr44KpAwX3IB9SZVu6V1Lqwazaph3rQIsB6ZaD9RH1N8\nbVY7hMAW56yz7CotdqFbVrX4ApmrA0H/rv7+3KhrEbS5nDIO6Gqrc8PW+puMWngu\nUxGZWWRnGbS6LlcIG7h6Gbv5MrihBWMKby7itz0kBpwfiLVHoWdYlR3WKt7nUDSm\nM/aCiepbzZC1CaG7JsGwSc6STJiYGiPjqcaAuqYuqGJuCtcZhKi1iAzOxUHsCrBR\ny4V3xU0kvzpm6twt6xdcqcieCbpcDAzSRC8RM9/CcNgFHb8I01DtuaytLq6X5jUA\nbOvg6cjdAgMBAAECggEACBj3pFG3mQEY3ic1faz/t5wIcyCxr70zxe1YJXY476MG\n9SKdHi5lfke3/1vQ0NojQjzRgOnerVBQnulfHIOg0NoG/e69srPvWvHiWFQ8VM/M\n1yFqV4k9WoprP0rM63FuAj9g7s17KNgfu5U6nXZp0cJDDXjZJfs8PHGm6GBaaiJz\nmEeDksZtWmOmM22OlZnIH9nZu79AgjsCPtQx6vYsuKl2ydcbhidUjwTDz9MR7KLV\n68weP23c91JviM+ocjwXT46uuNzDMy63ZKnQUOPCZQ1vRG8diBibpraxy0aXA3o5\ng98yPoKOI91ZOWJnVaBA0+hg7idsRnjnSlx/hkyaQQKBgQDwitIXOfYXheCAmv96\nD2ws8ZCOAEhCVgojbVkpCV2QYkj2NnBWg/7/SfPH+e8oQQ1+jwVCCYdkriEBpOi+\nFFeq71RifO+FXOKNouMHQQD6TUAcc4Ai7GrNwIYe0Kv3WdAdIjRqAZY5eq0A/JxK\nqVnK0UT9dwlqBhzvYt4dAvu8nQKBgQDXLcwRqDfOzoynndIcmmmU2faIgtAUabjq\nM0bYYbtdrCf57OT+I4p9rZOoqX5bOniiPtDXgqyGK/PsCfMWCBLfVFUkAyCQEKod\nhpUar5phifMy7urccdbr7CGpwZ/1YMTsGA9eSi3735nLZ3EScmM3ukTDQFojP20s\n0PQ6r2TpQQKBgQDBkrWnQ1mrbG1SkWluzOJ8+Jkf7VI5MAxQnjrWL1dAThfxK7YT\nqX2X6+dm0teHSXKWmnncvtZaS1b8f71c2foC8T6zU19dr3YSDTcuKz2iMHCbdMd1\nU1RP59MHEV6SW5CDIXeUp1pBP1viI2eTHd3IvcgLQbQtwmWer62XI0N6cQKBgQCZ\njrwv6Z0R/8LOp0jXUraAHF/cIYY+2we0Uq1/I5ejjITmzVDJsDFX6PQUDAj5L6wB\nFNTSxxU5lso2qw8HrPFS4Qr1bSnixZGxCmcDqUeBzgF5WpjOgor+x/9p9pyhbtJ5\nLd5hyowwT+ygBIzjvi/iCBKkSBtLRisyLVftPVfFQQKBgAO3lF9239wJxN76sB1w\nf43yZ1TIkgwFX9C6kAulss/hm5v78u2SuIKo0ela3IVJSTqAIhHbbCU8Wys4omqi\nL2/XmmiVaAtdnyDsEfx51c+gwvQKoBBSF9ad828C4foie64OathAnBVCK+tLa7Hw\nE5UjEC6MDApLAEieqFiP28aT\n-----END PRIVATE KEY-----\n",
+  "client_email": "accessbucket@fitfinder-3e49c.iam.gserviceaccount.com",
+  "client_id": "109054552796094121215",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/accessbucket%40fitfinder-3e49c.iam.gserviceaccount.com"
+}

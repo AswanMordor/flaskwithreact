@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Row } from "reactstrap";
 import { Link } from "react-router-dom";
+import fire from "../../credentials/Fire";
 
 class Login extends Component {
-
-  state = {
-    email: "",
-    password: ""
-  };
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
 
   handleChange = e => {
     this.setState({
@@ -17,13 +22,15 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+
+    fire
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password);
   };
 
   render() {
     return (
-      <Form className="container">
-        <br />
+      <Form className="container" onSubmit={this.handleSubmit}>
         <FormGroup>
           <Label for="email">Email</Label>
           <Input
@@ -44,9 +51,9 @@ class Login extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <Button class="btn" onChange={this.handleSubmit} >Login</Button>
+        <Button id="login-button" onChange={this.handleSubmit}>Login</Button>
         <Link to="/join">
-          <Button class="btn">Join</Button>
+          <Button id="join-button">Join</Button>
         </Link>
       </Form>
     );

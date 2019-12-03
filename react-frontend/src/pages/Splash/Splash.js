@@ -8,8 +8,8 @@ class Splash extends Component {
         <div className="text-container">
           <h1>Fit Finder</h1>
           <p>Find your fits here!</p>
-          <Link to="/home">
-            <button>Find your fit!</button>
+          <Link to="/login">
+            <button id="enter-button">Enter</button>
           </Link>
         </div>
       </div>
