@@ -27,16 +27,26 @@ firebase_app = firebase_admin.initialize_app(cred)
 
 read = firestore.client()
 
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        # else:
+        #     cls._instances[cls].__init__(*args, **kwargs)
+        return cls._instances[cls]
+
+class StorageClient(metaclass=Singleton):
+    sc = storage.Client.from_service_account_json(str(Path("FitFinder-905180b5f6de.json").absolute()))
 
 def explicit():
     from google.cloud import storage
     # Explicitly use service account credentials by specifying the private key
     # file.
-    storage_client = storage.Client.from_service_account_json(
-        str(Path("FitFinder-905180b5f6de.json").absolute()))
+    storage_client = StorageClient()
 
     # Make an authenticated API request
-    buckets = list(storage_client.list_buckets())
+    buckets = list(storage_client.sc.list_buckets())
     print(buckets)
 
 
@@ -75,10 +85,9 @@ def productSearch():
     filename = secure_filename(file.filename)
     # filename = request.files['filename']
     # print(filename)
-    storage_client = storage.Client.from_service_account_json(
-        str(Path("FitFinder-905180b5f6de.json").absolute()))
+    storage_client = StorageClient()
 
-    bucket = storage_client.get_bucket(bucket_name)
+    bucket = storage_client.sc.get_bucket(bucket_name)
     filepath, file_extension = os.path.splitext("/tmp/" + filename)
     blob = bucket.blob(imageName+file_extension)
     response = flask.jsonify({"res": "DONE"})
