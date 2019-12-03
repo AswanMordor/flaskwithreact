@@ -64,9 +64,9 @@ class Main extends Component {
           <Nav className="ml-auto" navbar>
             {this.state.user ? (
               <React.Fragment>
-                {/* <NavItem>
+                 <NavItem>
                   <NavLink href="/trending">Trending</NavLink>
-                </NavItem> */}
+                </NavItem>
                 <NavItem>
                   <NavLink href="/home">Home</NavLink>
                 </NavItem>
@@ -87,7 +87,7 @@ class Main extends Component {
         <Switch>
           <Route exact path="/" component={Splash} />
           <Route path="/home" component={Home} />
-          {/* <Route path="/trending" component={Trending} /> */}
+          <Route path="/trending" component={Trending} />
           <Route path="/login" component={Login} />
           <Route path="/join" component={Join} />
           <Route path="/about" component={About} />
