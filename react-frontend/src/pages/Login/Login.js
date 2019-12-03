@@ -18,6 +18,8 @@ class Login extends Component {
     this.setState({
       [e.target.id]: e.target.value
     });
+
+    console.log(this.state);
   };
 
   handleSubmit = e => {
@@ -30,32 +32,47 @@ class Login extends Component {
 
   render() {
     return (
-      <Form className="container" onSubmit={this.handleSubmit}>
-        <FormGroup>
-          <Label for="email">Email</Label>
-          <Input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="example@example.com"
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="password">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="password123"
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <Button id="login-button" onChange={this.handleSubmit}>Login</Button>
-        <Link to="/join">
-          <Button id="join-button">Join</Button>
-        </Link>
-      </Form>
+      <div id="login">
+        <div className="wrapper">
+          <div className="form-wrapper">
+            <h1>Login</h1>
+            <Form className="container" onSubmit={this.handleSubmit}>
+              <div className="email">
+                <Label for="email">Email</Label>
+                <Input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="example@example.com"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="password">
+                <Label for="password">Password</Label>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="password123"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="createAccount">
+                <Button
+                  type="submit"
+                  id="login-button"
+                  onChange={this.handleSubmit}
+                >
+                  Login
+                </Button>
+                <Link to="/join">
+                  <small>Create an account!</small>
+                </Link>
+              </div>
+            </Form>
+          </div>
+        </div>
+      </div>
     );
   }
 }
